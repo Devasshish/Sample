@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Sparkles, Compass, Layers, Users, Zap } from 'lucide-react';
+import { ArrowDown, Sparkles, Compass, Layers, Users, Zap, Terminal } from 'lucide-react';
 import { CHAPTERS } from '../../data/storyData';
 import { TEAM_MEMBERS } from '../../data/teamData';
 import { PROJECTS } from '../../data/projectData';
@@ -11,13 +11,17 @@ export function StoryOverlay({
   onNavigateChapter,
   onSelectMember,
   onSelectProject,
-  onOpenTransmission
+  onOpenTransmission,
+  hoveredMemberId,
+  setHoveredMemberId,
+  hoveredProjectId,
+  setHoveredProjectId
 }) {
   // Calculate chapter fade opacity based on distance to center of range
   const midPoint = (currentChapter.range[0] + currentChapter.range[1]) / 2;
   const halfSpan = (currentChapter.range[1] - currentChapter.range[0]) / 2;
   const distFromCenter = Math.abs(progress - midPoint) / halfSpan;
-  const chapterOpacity = Math.max(0.15, Math.min(1, 1.2 - distFromCenter * 0.8));
+  const chapterOpacity = Math.max(0.12, Math.min(1, 1.25 - distFromCenter * 0.9));
 
   return (
     <div className="story-overlay" style={{ opacity: chapterOpacity }}>
@@ -49,7 +53,7 @@ export function StoryOverlay({
                 <ArrowDown size={14} className="bouncing-arrow" />
               </span>
             </button>
-            <div className="sub-prompt">OR PRESS DOWN ARROW / SWIPE</div>
+            <div className="sub-prompt">OR PRESS DOWN ARROW / SWIPE UP</div>
           </div>
         )}
 
@@ -71,17 +75,19 @@ export function StoryOverlay({
           </div>
         )}
 
-        {/* Scene 3: Team Roster Mini-Pills */}
+        {/* Scene 3: Team Roster Mini-Pills with Real-time 3D Hover Sync */}
         {currentChapter.id === 'team' && (
           <div className="team-roster-tray">
-            <div className="tray-label">DISCOVER PRACTITIONERS // CLICK 3D ARTIFACT OR NAME:</div>
+            <div className="tray-label">DISCOVER PRACTITIONERS // CLICK 3D ARTIFACT OR MEMBER:</div>
             <div className="roster-grid">
               {TEAM_MEMBERS.map((member) => (
                 <button
                   key={member.id}
                   type="button"
-                  className="roster-card-btn"
+                  className={`roster-card-btn ${hoveredMemberId === member.id ? 'active' : ''}`}
                   onClick={() => onSelectMember(member)}
+                  onMouseEnter={() => setHoveredMemberId(member.id)}
+                  onMouseLeave={() => setHoveredMemberId(null)}
                 >
                   <span className="roster-color-dot" style={{ backgroundColor: member.accentColor }} />
                   <div className="roster-info">
@@ -115,7 +121,7 @@ export function StoryOverlay({
           </div>
         )}
 
-        {/* Scene 5: Projects Tray */}
+        {/* Scene 5: Projects Tray with Real-time 3D Hover Sync */}
         {currentChapter.id === 'projects' && (
           <div className="projects-roster-tray">
             <div className="tray-label">SELECT LIVING MONUMENT TO DECONSTRUCT:</div>
@@ -124,8 +130,10 @@ export function StoryOverlay({
                 <button
                   key={proj.id}
                   type="button"
-                  className="project-card-btn"
+                  className={`project-card-btn ${hoveredProjectId === proj.id ? 'active' : ''}`}
                   onClick={() => onSelectProject(proj)}
+                  onMouseEnter={() => setHoveredProjectId(proj.id)}
+                  onMouseLeave={() => setHoveredProjectId(null)}
                 >
                   <div className="project-badge" style={{ color: proj.accentColor }}>{proj.code}</div>
                   <div className="project-card-title">{proj.title}</div>
@@ -157,6 +165,13 @@ export function StoryOverlay({
             </button>
           </div>
         )}
+
+        {/* Subtle Keyboard Navigation HUD */}
+        <div className="keyboard-hints-hud">
+          <span>KEYBOARD: [1-6: JUMP]</span>
+          <span>[↑/↓: SCROLL]</span>
+          <span>[ESC: CLOSE]</span>
+        </div>
       </div>
     </div>
   );

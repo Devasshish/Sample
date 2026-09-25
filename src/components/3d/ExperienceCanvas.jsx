@@ -21,7 +21,7 @@ export function ExperienceCanvas({
   return (
     <div className="canvas-container" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
       <Canvas
-        camera={{ position: [0, 2.2, 10], fov: 45, near: 0.1, far: 80 }}
+        camera={{ position: [-0.6, 1.6, 8.2], fov: 45, near: 0.1, far: 90 }}
         gl={{
           antialias: true,
           alpha: false,
@@ -31,25 +31,46 @@ export function ExperienceCanvas({
         dpr={[1, Math.min(window.devicePixelRatio || 1, 2)]}
       >
         <color attach="background" args={['#0a0b0e']} />
-        <fogExp2 attach="fog" args={['#0d0f14', 0.038]} />
+        <fogExp2 attach="fog" args={['#0d0f14', 0.030]} />
 
-        {/* Cinematic Atmospheric Lighting */}
-        <ambientLight intensity={0.65} color="#fff1e6" />
+        {/* Cinematic Multi-Key Lighting Setup */}
+        <ambientLight intensity={0.85} color="#fff1e6" />
+        
+        {/* Key Sunlight */}
         <directionalLight
-          position={[6, 10, 8]}
-          intensity={1.2}
-          color="#ffefe0"
+          position={[8, 14, 10]}
+          intensity={1.8}
+          color="#fff5ea"
         />
+
+        {/* Cool Subterranean Rim / Edge Light */}
         <directionalLight
-          position={[-6, -4, -6]}
-          intensity={0.4}
-          color="#d97736"
+          position={[-8, 5, -8]}
+          intensity={1.1}
+          color="#94a3b8"
         />
-        <pointLight position={[0, 4, 2]} intensity={1.5} color="#ff8c42" distance={14} />
+
+        {/* Warm Terracotta Under-glow Bounce */}
+        <pointLight
+          position={[1.8, -3, 2]}
+          intensity={2.8}
+          color="#ff6b35"
+          distance={16}
+          decay={2}
+        />
+
+        {/* Dynamic World Accent Light */}
+        <pointLight
+          position={[1.8, 3.5, 3]}
+          intensity={2.2}
+          color="#fef08a"
+          distance={12}
+          decay={2}
+        />
 
         <Suspense fallback={null}>
           <CameraRig progress={progress} reducedMotion={reducedMotion} />
-          <AtmosphericDust count={reducedMotion ? 120 : 350} progress={progress} />
+          <AtmosphericDust count={reducedMotion ? 120 : 400} progress={progress} />
           <TopologicalTerrain progress={progress} />
           
           <PrimordialCore progress={progress} onCoreClick={onCoreClick} />

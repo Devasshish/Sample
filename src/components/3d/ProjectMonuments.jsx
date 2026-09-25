@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { PROJECTS } from '../../data/projectData';
@@ -7,22 +7,28 @@ export function ProjectMonuments({ progress = 0, onSelectProject, hoveredProject
   const groupRef = useRef();
   const projectMeshesRef = useRef([]);
 
+  // Offset coordinates centered at x: 1.8 to avoid overlapping left editorial typography
+  const monumentPositions = [
+    [0.6, 0.3, 0.4],   // Project Chronos
+    [1.9, 0.8, -0.7],  // Synapse Pavilion
+    [3.1, -0.3, 0.6]   // AuraOS
+  ];
+
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     const time = state.clock.getElapsedTime();
 
-    // Scene 5 visibility range: 0.68 to 0.94
+    // Scene 5 visibility range: 0.68 to 0.93
     let scale = 0;
     if (progress >= 0.68 && progress <= 0.74) {
       scale = (progress - 0.68) / 0.06;
-    } else if (progress > 0.74 && progress <= 0.90) {
+    } else if (progress > 0.74 && progress <= 0.89) {
       scale = 1;
-    } else if (progress > 0.90 && progress <= 0.98) {
-      scale = Math.max(0.01, 1 - (progress - 0.90) / 0.08);
+    } else if (progress > 0.89 && progress <= 0.96) {
+      scale = Math.max(0.01, 1 - (progress - 0.89) / 0.07);
     }
-    groupRef.current.scale.setScalar(scale);
+    groupRef.current.scale.setScalar(scale * 1.2);
 
-    // Animate each monument
     projectMeshesRef.current.forEach((mesh, index) => {
       if (!mesh) return;
       const proj = PROJECTS[index];
@@ -30,22 +36,22 @@ export function ProjectMonuments({ progress = 0, onSelectProject, hoveredProject
 
       // Project 1: Chronos (Sundial)
       if (proj.id === 'chronos') {
-        mesh.rotation.y = time * 0.25;
-        mesh.rotation.z = Math.sin(time * 0.4) * 0.1;
+        mesh.rotation.y = time * 0.35;
+        mesh.rotation.z = Math.sin(time * 0.5) * 0.12;
       }
-      // Project 2: Synapse (Bio Pavilion)
+      // Project 2: Synapse (Biome Pavilion)
       else if (proj.id === 'synapse') {
-        mesh.rotation.y = -time * 0.18;
-        const breath = 1.0 + Math.sin(time * 1.8) * 0.06;
-        mesh.scale.setScalar(breath * (isHovered ? 1.2 : 1.0));
+        mesh.rotation.y = -time * 0.22;
+        const breath = 1.0 + Math.sin(time * 2.0) * 0.08;
+        mesh.scale.setScalar(breath * (isHovered ? 1.25 : 1.0));
       }
       // Project 3: AuraOS (Spatial Interface)
       else if (proj.id === 'auraos') {
-        mesh.rotation.x = Math.sin(time * 0.5) * 0.15;
-        mesh.rotation.y = time * 0.3;
+        mesh.rotation.x = Math.sin(time * 0.6) * 0.18;
+        mesh.rotation.y = time * 0.4;
       }
 
-      const baseScale = isHovered ? 1.18 : 1.0;
+      const baseScale = isHovered ? 1.22 : 1.0;
       if (proj.id !== 'synapse') {
         mesh.scale.setScalar(baseScale);
       }
@@ -58,7 +64,7 @@ export function ProjectMonuments({ progress = 0, onSelectProject, hoveredProject
         <group
           key={proj.id}
           ref={(el) => (projectMeshesRef.current[index] = el)}
-          position={proj.position}
+          position={monumentPositions[index]}
           onClick={(e) => {
             e.stopPropagation();
             onSelectProject(proj);
@@ -73,97 +79,123 @@ export function ProjectMonuments({ progress = 0, onSelectProject, hoveredProject
             document.body.style.cursor = 'auto';
           }}
         >
-          {/* Project 1: Project Chronos */}
+          {/* Project 1: Chronos (The Living Sundial) */}
           {proj.shape === 'sundial' && (
             <group>
-              {/* Outer Sundial Ring */}
+              {/* Outer Heliotropic Dial Ring */}
               <mesh>
-                <torusGeometry args={[0.9, 0.05, 16, 64]} />
+                <torusGeometry args={[1.05, 0.06, 20, 80]} />
                 <meshStandardMaterial
                   color="#ff6b35"
-                  metalness={0.92}
-                  roughness={0.18}
+                  metalness={0.94}
+                  roughness={0.16}
                   emissive="#d84315"
-                  emissiveIntensity={hoveredProjectId === proj.id ? 0.7 : 0.2}
+                  emissiveIntensity={hoveredProjectId === proj.id ? 0.9 : 0.35}
                 />
               </mesh>
-              {/* Heliotropic Gnomon Blade */}
-              <mesh position={[0, 0, 0]} rotation={[0, 0, Math.PI / 6]}>
-                <cylinderGeometry args={[0.04, 0.08, 1.4, 8]} />
-                <meshStandardMaterial color="#fed7aa" metalness={0.95} roughness={0.1} />
+              {/* Secondary Concentric Ring */}
+              <mesh rotation={[Math.PI / 4, 0, 0]}>
+                <torusGeometry args={[0.78, 0.035, 16, 64]} />
+                <meshStandardMaterial color="#fef08a" metalness={0.96} roughness={0.1} />
               </mesh>
-              {/* Optical Prism Refractor */}
+              {/* Optical Prism Refractor Gnomon */}
               <mesh position={[0, 0.45, 0]}>
-                <octahedronGeometry args={[0.28, 0]} />
-                <meshStandardMaterial color="#ffffff" metalness={0.3} roughness={0.1} wireframe={true} />
-              </mesh>
-            </group>
-          )}
-
-          {/* Project 2: Synapse Pavilion */}
-          {proj.shape === 'biome' && (
-            <group>
-              {/* Geodesic Living Dome */}
-              <mesh>
-                <sphereGeometry args={[0.75, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+                <octahedronGeometry args={[0.35, 0]} />
                 <meshStandardMaterial
-                  color="#5ce1b6"
-                  roughness={0.25}
-                  metalness={0.5}
-                  wireframe={true}
-                  emissive="#059669"
-                  emissiveIntensity={hoveredProjectId === proj.id ? 0.8 : 0.3}
-                />
-              </mesh>
-              {/* Internal Bioluminescent Core */}
-              <mesh position={[0, 0.25, 0]}>
-                <dodecahedronGeometry args={[0.35, 0]} />
-                <meshStandardMaterial
-                  color="#a7f3d0"
-                  roughness={0.2}
-                  metalness={0.8}
-                  emissive="#10b981"
+                  color="#ffffff"
+                  metalness={0.2}
+                  roughness={0.08}
+                  wireframe={false}
+                  emissive="#fed7aa"
                   emissiveIntensity={0.6}
                 />
               </mesh>
+              {/* Central Light Well */}
+              <mesh position={[0, 0, 0]}>
+                <cylinderGeometry args={[0.08, 0.08, 1.6, 16]} />
+                <meshStandardMaterial color="#d1b896" metalness={0.9} roughness={0.2} />
+              </mesh>
             </group>
           )}
 
-          {/* Project 3: AuraOS */}
-          {proj.shape === 'interface' && (
+          {/* Project 2: Synapse Pavilion (Bioluminescent Biome) */}
+          {proj.shape === 'biome' && (
             <group>
-              {/* Floating Layered Interface Disks */}
-              <mesh position={[0, -0.2, 0]}>
-                <cylinderGeometry args={[0.75, 0.75, 0.04, 32]} />
+              {/* Geodesic Bio-Canopy */}
+              <mesh>
+                <sphereGeometry args={[0.92, 20, 20, 0, Math.PI * 2, 0, Math.PI * 0.65]} />
                 <meshStandardMaterial
-                  color="#a78bfa"
-                  metalness={0.9}
-                  roughness={0.2}
-                  emissive="#6d28d9"
-                  emissiveIntensity={hoveredProjectId === proj.id ? 0.7 : 0.25}
+                  color="#5ce1b6"
+                  roughness={0.22}
+                  metalness={0.6}
+                  wireframe={true}
+                  emissive="#059669"
+                  emissiveIntensity={hoveredProjectId === proj.id ? 1.0 : 0.45}
                 />
               </mesh>
-              <mesh position={[0, 0.15, 0]} rotation={[0.2, 0, 0]}>
-                <ringGeometry args={[0.45, 0.65, 32]} />
+              {/* Inner Mycelial Nucleus */}
+              <mesh position={[0, 0.35, 0]}>
+                <dodecahedronGeometry args={[0.42, 0]} />
+                <meshStandardMaterial
+                  color="#a7f3d0"
+                  roughness={0.18}
+                  metalness={0.8}
+                  emissive="#10b981"
+                  emissiveIntensity={0.8}
+                />
+              </mesh>
+              {/* Spore Filaments */}
+              <mesh position={[0, -0.2, 0]}>
+                <torusGeometry args={[0.55, 0.03, 16, 48]} />
+                <meshStandardMaterial color="#34d399" metalness={0.9} roughness={0.2} />
+              </mesh>
+            </group>
+          )}
+
+          {/* Project 3: AuraOS (Tactile Volumetric Interface) */}
+          {proj.shape === 'interface' && (
+            <group>
+              {/* Layer 1: Base Volumetric Glass Disk */}
+              <mesh position={[0, -0.25, 0]}>
+                <cylinderGeometry args={[0.9, 0.9, 0.05, 32]} />
+                <meshStandardMaterial
+                  color="#a78bfa"
+                  metalness={0.92}
+                  roughness={0.15}
+                  emissive="#6d28d9"
+                  emissiveIntensity={hoveredProjectId === proj.id ? 0.85 : 0.3}
+                />
+              </mesh>
+              {/* Layer 2: Floating Kinetic Optical Reticle */}
+              <mesh position={[0, 0.15, 0]} rotation={[0.25, 0, 0]}>
+                <ringGeometry args={[0.55, 0.78, 32]} />
                 <meshStandardMaterial
                   color="#ddd6fe"
-                  metalness={0.8}
-                  roughness={0.15}
+                  metalness={0.85}
+                  roughness={0.12}
                   side={THREE.DoubleSide}
                 />
               </mesh>
-              <mesh position={[0, 0.45, 0]}>
-                <boxGeometry args={[0.35, 0.35, 0.35]} />
-                <meshStandardMaterial color="#ffffff" wireframe />
+              {/* Layer 3: Central Floating Volumetric Glyph */}
+              <mesh position={[0, 0.48, 0]}>
+                <boxGeometry args={[0.42, 0.42, 0.42]} />
+                <meshStandardMaterial
+                  color="#ffffff"
+                  metalness={0.1}
+                  roughness={0.1}
+                  wireframe={true}
+                  emissive="#c4b5fd"
+                  emissiveIntensity={0.7}
+                />
               </mesh>
             </group>
           )}
 
-          {/* Point light for monument illumination */}
+          {/* Project Ambient Glow */}
           <pointLight
             color={proj.accentColor}
-            intensity={hoveredProjectId === proj.id ? 3.0 : 1.4}
-            distance={5}
+            intensity={hoveredProjectId === proj.id ? 4.2 : 2.0}
+            distance={6.5}
             decay={2}
           />
         </group>

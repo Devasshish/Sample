@@ -132,6 +132,10 @@ export default function App() {
         onSelectMember={handleSelectMember}
         onSelectProject={handleSelectProject}
         onOpenTransmission={handleOpenTransmission}
+        hoveredMemberId={hoveredMemberId}
+        setHoveredMemberId={setHoveredMemberId}
+        hoveredProjectId={hoveredProjectId}
+        setHoveredProjectId={setHoveredProjectId}
       />
 
       {/* Persistent Navigation Track & Progress Bar */}
