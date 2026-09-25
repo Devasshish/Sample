@@ -6,16 +6,20 @@ import { CHAPTERS } from '../../data/storyData';
 export function CameraRig({ progress = 0, reducedMotion = false }) {
   const { camera } = useThree();
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const currentPosRef = useRef(new THREE.Vector3(0, 2.2, 10));
-  const currentLookAtRef = useRef(new THREE.Vector3(0, 0, 0));
+  const currentPosRef = useRef(new THREE.Vector3(-0.6, 1.6, 8.2));
+  const currentLookAtRef = useRef(new THREE.Vector3(1.8, 0.1, 0));
 
-  // Mouse parallax tracking
+  // Pre-allocated vectors to prevent GC allocations inside useFrame
+  const targetPosRef = useRef(new THREE.Vector3());
+  const targetLookAtRef = useRef(new THREE.Vector3());
+
+  // Mouse parallax tracking with passive listener
   useEffect(() => {
     const onMouseMove = (e) => {
       mouseRef.current.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
       mouseRef.current.targetY = -(e.clientY / window.innerHeight - 0.5) * 2;
     };
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', onMouseMove);
   }, []);
 
@@ -66,14 +70,17 @@ export function CameraRig({ progress = 0, reducedMotion = false }) {
     const lookZ = THREE.MathUtils.lerp(startChapter.cameraTarget[2], endChapter.cameraTarget[2], smoothT);
 
     // Apply parallax offset
-    const parallaxIntensity = reducedMotion ? 0 : 0.45;
+    const parallaxIntensity = reducedMotion ? 0 : 0.4;
     const finalPosX = targetX + mouseRef.current.x * parallaxIntensity;
     const finalPosY = targetY + mouseRef.current.y * parallaxIntensity * 0.5;
     const finalPosZ = targetZ;
 
-    // Dampen camera position & target updates for ultra smooth continuity
-    currentPosRef.current.lerp(new THREE.Vector3(finalPosX, finalPosY, finalPosZ), 0.1);
-    currentLookAtRef.current.lerp(new THREE.Vector3(lookX, lookY, lookZ), 0.1);
+    // Zero-allocation vector lerping
+    targetPosRef.current.set(finalPosX, finalPosY, finalPosZ);
+    targetLookAtRef.current.set(lookX, lookY, lookZ);
+
+    currentPosRef.current.lerp(targetPosRef.current, 0.1);
+    currentLookAtRef.current.lerp(targetLookAtRef.current, 0.1);
 
     camera.position.copy(currentPosRef.current);
     camera.lookAt(currentLookAtRef.current);

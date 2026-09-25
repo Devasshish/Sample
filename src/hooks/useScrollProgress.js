@@ -7,10 +7,11 @@ export function useScrollProgress() {
   const [isScrolling, setIsScrolling] = useState(false);
   const progressRef = useRef(0);
   const targetProgressRef = useRef(0);
+  const lastStateUpdateRef = useRef(0);
   const rafRef = useRef(null);
   const scrollTimeoutRef = useRef(null);
 
-  // Sync current chapter index whenever progress updates
+  // Sync current chapter index
   useEffect(() => {
     const idx = CHAPTERS.findIndex(ch => progress >= ch.range[0] && progress <= ch.range[1]);
     if (idx !== -1 && idx !== currentChapterIndex) {
@@ -18,7 +19,7 @@ export function useScrollProgress() {
     }
   }, [progress, currentChapterIndex]);
 
-  // Smooth lerp loop
+  // Smooth critically-damped spring lerp loop with throttled React state dispatch
   useEffect(() => {
     let lastTime = performance.now();
 
@@ -27,11 +28,19 @@ export function useScrollProgress() {
       lastTime = currentTime;
 
       const diff = targetProgressRef.current - progressRef.current;
-      if (Math.abs(diff) > 0.0001) {
-        // High quality critically-damped spring-like lerp
+      if (Math.abs(diff) > 0.00005) {
         const lerpFactor = Math.min(1, delta * 7.5);
         progressRef.current += diff * lerpFactor;
-        setProgress(Math.max(0, Math.min(1, progressRef.current)));
+        const newProg = Math.max(0, Math.min(1, progressRef.current));
+
+        // Throttle React state update to avoid redundant DOM reconciliations
+        const deltaSinceLast = Math.abs(newProg - lastStateUpdateRef.current);
+        const isSettling = Math.abs(targetProgressRef.current - newProg) < 0.0001;
+
+        if (deltaSinceLast >= 0.003 || isSettling) {
+          lastStateUpdateRef.current = newProg;
+          setProgress(newProg);
+        }
       }
 
       rafRef.current = requestAnimationFrame(loop);
@@ -48,18 +57,16 @@ export function useScrollProgress() {
     targetProgressRef.current = Math.max(0, Math.min(1, newTarget));
     setIsScrolling(true);
     if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-    scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 300);
+    scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 250);
   }, []);
 
-  // Wheel listener
+  // Passive wheel and touch listeners (non-blocking for browser compositor thread)
   useEffect(() => {
     const onWheel = (e) => {
-      // Normalize wheel delta across browsers and touchpads
       const delta = e.deltaY * 0.00045;
       updateTarget(targetProgressRef.current + delta);
     };
 
-    // Touch support for mobile swipe
     let touchStartY = 0;
     const onTouchStart = (e) => {
       touchStartY = e.touches[0].clientY;
@@ -71,7 +78,6 @@ export function useScrollProgress() {
       updateTarget(targetProgressRef.current + delta);
     };
 
-    // Keyboard navigation (PageUp, PageDown, Up, Down, Space, 1-6)
     const onKeyDown = (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 

@@ -2,7 +2,19 @@ import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-export function PrimordialCore({ progress = 0, onCoreClick }) {
+// Static shard template outside component
+const SHARD_CONFIGS = [
+  { angle: 0, radius: 2.6, size: 0.12, elevation: -0.8 },
+  { angle: 0.78, radius: 2.9, size: 0.16, elevation: -0.4 },
+  { angle: 1.57, radius: 2.6, size: 0.12, elevation: 0.0 },
+  { angle: 2.35, radius: 3.2, size: 0.18, elevation: 0.4 },
+  { angle: 3.14, radius: 2.7, size: 0.14, elevation: 0.8 },
+  { angle: 3.92, radius: 2.9, size: 0.16, elevation: 0.4 },
+  { angle: 4.71, radius: 2.6, size: 0.12, elevation: 0.0 },
+  { angle: 5.49, radius: 3.1, size: 0.18, elevation: -0.5 }
+];
+
+export function PrimordialCore({ progress = 0, onCoreClick, enableShards = true }) {
   const groupRef = useRef();
   const ring1Ref = useRef();
   const ring2Ref = useRef();
@@ -11,18 +23,7 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
   const crystalInnerRef = useRef();
   const shardsGroupRef = useRef();
 
-  // Create orbiting satellite shards
-  const shards = useMemo(() => {
-    return Array.from({ length: 8 }, (_, i) => ({
-      angle: (i / 8) * Math.PI * 2,
-      radius: 2.6 + (i % 3) * 0.35,
-      speed: 0.4 + (i % 2) * 0.3,
-      size: 0.12 + (i % 3) * 0.06,
-      elevation: (i - 4) * 0.28
-    }));
-  }, []);
-
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!groupRef.current) return;
     const time = state.clock.getElapsedTime();
 
@@ -34,10 +35,15 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
     if (progress > 0.32 && progress < 0.52) {
       targetScale = 1 - (progress - 0.32) / 0.20;
     } else if (progress >= 0.52) {
-      targetScale = 0.02; // distant ember
+      targetScale = 0.001;
     }
 
-    groupRef.current.scale.setScalar(Math.max(0.01, targetScale * 1.35));
+    groupRef.current.scale.setScalar(Math.max(0.001, targetScale * 1.35));
+    if (targetScale < 0.01) {
+      groupRef.current.visible = false;
+      return;
+    }
+    groupRef.current.visible = true;
 
     // Astrolabe Gimbal Rings
     if (ring1Ref.current) {
@@ -76,9 +82,9 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
 
   return (
     <group ref={groupRef} position={[1.8, 0, 0]} onClick={onCoreClick}>
-      {/* Outer Astrolabe Ring 1 - Brushed Warm Titanium with notched teeth */}
+      {/* Outer Astrolabe Ring 1 */}
       <mesh ref={ring1Ref}>
-        <torusGeometry args={[2.4, 0.045, 24, 80]} />
+        <torusGeometry args={[2.4, 0.045, 18, 64]} />
         <meshStandardMaterial
           color="#d1b896"
           metalness={0.95}
@@ -88,9 +94,9 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
         />
       </mesh>
 
-      {/* Middle Astrolabe Ring 2 - Deep Vermilion Burnished Copper */}
+      {/* Middle Astrolabe Ring 2 */}
       <mesh ref={ring2Ref}>
-        <torusGeometry args={[1.85, 0.04, 24, 80]} />
+        <torusGeometry args={[1.85, 0.04, 18, 64]} />
         <meshStandardMaterial
           color="#ff6b35"
           metalness={0.92}
@@ -100,9 +106,9 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
         />
       </mesh>
 
-      {/* Inner Astrolabe Ring 3 - Polished Champagne Pyrite */}
+      {/* Inner Astrolabe Ring 3 */}
       <mesh ref={ring3Ref}>
-        <torusGeometry args={[1.35, 0.035, 20, 64]} />
+        <torusGeometry args={[1.35, 0.035, 16, 48]} />
         <meshStandardMaterial
           color="#f3e5ab"
           metalness={0.96}
@@ -125,7 +131,7 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
         />
       </mesh>
 
-      {/* Inner Dense Crystalline Core (Glowing Warm Amber/Vermilion) */}
+      {/* Inner Dense Crystalline Core */}
       <mesh ref={crystalInnerRef}>
         <dodecahedronGeometry args={[0.62, 0]} />
         <meshStandardMaterial
@@ -137,31 +143,35 @@ export function PrimordialCore({ progress = 0, onCoreClick }) {
         />
       </mesh>
 
-      {/* Dynamic Internal Core Point Light */}
-      <pointLight color="#ff6b35" intensity={4.5} distance={9} decay={2} />
+      {/* Dynamically Culled Point Light - only active when visible */}
+      {progress <= 0.38 && (
+        <pointLight color="#ff6b35" intensity={4.5} distance={9} decay={2} />
+      )}
 
       {/* Orbiting Mineral Shards */}
-      <group ref={shardsGroupRef}>
-        {shards.map((s, idx) => (
-          <mesh
-            key={idx}
-            position={[
-              Math.cos(s.angle) * s.radius,
-              s.elevation,
-              Math.sin(s.angle) * s.radius
-            ]}
-          >
-            <tetrahedronGeometry args={[s.size, 0]} />
-            <meshStandardMaterial
-              color="#ffb088"
-              metalness={0.9}
-              roughness={0.2}
-              emissive="#ff5722"
-              emissiveIntensity={0.3}
-            />
-          </mesh>
-        ))}
-      </group>
+      {enableShards && (
+        <group ref={shardsGroupRef}>
+          {SHARD_CONFIGS.map((s, idx) => (
+            <mesh
+              key={idx}
+              position={[
+                Math.cos(s.angle) * s.radius,
+                s.elevation,
+                Math.sin(s.angle) * s.radius
+              ]}
+            >
+              <tetrahedronGeometry args={[s.size, 0]} />
+              <meshStandardMaterial
+                color="#ffb088"
+                metalness={0.9}
+                roughness={0.2}
+                emissive="#ff5722"
+                emissiveIntensity={0.3}
+              />
+            </mesh>
+          ))}
+        </group>
+      )}
     </group>
   );
 }

@@ -1,69 +1,60 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 export function AtmosphericDust({ count = 350, progress = 0 }) {
   const pointsRef = useRef();
 
-  const [positions, scales, speeds] = useMemo(() => {
+  const [positions, geometry, material] = useMemo(() => {
     const pos = new Float32Array(count * 3);
-    const sca = new Float32Array(count);
-    const spd = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
-      // Spatial volume around camera travel path
-      pos[i * 3 + 0] = (Math.random() - 0.5) * 22;
+      pos[i * 3 + 0] = (Math.random() - 0.5) * 24;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 14;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 24;
-
-      sca[i] = Math.random() * 0.08 + 0.02;
-      spd[i] = Math.random() * 0.4 + 0.1;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 26;
     }
 
-    return [pos, sca, spd];
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+    const mat = new THREE.PointsMaterial({
+      size: 0.065,
+      color: '#f3dfc8',
+      transparent: true,
+      opacity: 0.55,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    return [pos, geo, mat];
   }, [count]);
 
-  useFrame((state, delta) => {
+  // Clean GPU memory on unmount
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+      material.dispose();
+    };
+  }, [geometry, material]);
+
+  useFrame((state) => {
     if (!pointsRef.current) return;
-    const posAttr = pointsRef.current.geometry.attributes.position;
-    const array = posAttr.array;
-
     const time = state.clock.getElapsedTime();
-    const convergenceFactor = Math.sin(progress * Math.PI) * 0.8;
 
-    for (let i = 0; i < count; i++) {
-      const idx = i * 3;
-      // Gentle buoyant upward drift
-      array[idx + 1] += Math.sin(time * speeds[i] + i) * 0.004;
+    // High performance GPU-transform without CPU buffer writes
+    pointsRef.current.rotation.y = time * 0.02;
+    pointsRef.current.position.y = Math.sin(time * 0.25) * 0.25;
 
-      // Slight inward pull during transformation (Scene 4)
-      if (progress > 0.45 && progress < 0.72) {
-        array[idx] += (0 - array[idx]) * 0.003 * convergenceFactor;
-        array[idx + 2] += (0 - array[idx + 2]) * 0.003 * convergenceFactor;
-      }
+    // Slight inward pull during transformation (Scene 4)
+    if (progress > 0.48 && progress < 0.72) {
+      const conv = Math.sin((progress - 0.48) / 0.24 * Math.PI) * 0.25;
+      pointsRef.current.scale.set(1 - conv, 1, 1 - conv);
+    } else {
+      pointsRef.current.scale.set(1, 1, 1);
     }
-
-    posAttr.needsUpdate = true;
   });
 
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.06}
-        color="#f3dfc8"
-        transparent
-        opacity={0.55}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </points>
+    <primitive object={new THREE.Points(geometry, material)} ref={pointsRef} />
   );
 }
