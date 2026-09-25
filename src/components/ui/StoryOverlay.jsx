@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Sparkles, Compass, Layers, Users, Zap, Terminal } from 'lucide-react';
+import { ArrowDown, Sparkles, Compass, Layers, Users, Zap, Terminal, Activity } from 'lucide-react';
 import { CHAPTERS } from '../../data/storyData';
 import { TEAM_MEMBERS } from '../../data/teamData';
 import { PROJECTS } from '../../data/projectData';
@@ -17,7 +17,6 @@ export function StoryOverlay({
   hoveredProjectId,
   setHoveredProjectId
 }) {
-  // Calculate chapter fade opacity based on distance to center of range
   const midPoint = (currentChapter.range[0] + currentChapter.range[1]) / 2;
   const halfSpan = (currentChapter.range[1] - currentChapter.range[0]) / 2;
   const distFromCenter = Math.abs(progress - midPoint) / halfSpan;
@@ -57,55 +56,71 @@ export function StoryOverlay({
           </div>
         )}
 
-        {/* Scene 2: Origin Philosophy Nodes */}
+        {/* Scene 2: Origin Curatorial Tags */}
         {currentChapter.id === 'origin' && (
           <div className="philosophy-tags">
             <div className="philosophy-pill">
-              <span className="pill-dot" />
+              <span className="pill-index">[01]</span>
               <span>Computational Mineralogy</span>
             </div>
             <div className="philosophy-pill">
-              <span className="pill-dot" />
+              <span className="pill-index">[02]</span>
               <span>Acoustic Waveform Solidification</span>
             </div>
             <div className="philosophy-pill">
-              <span className="pill-dot" />
+              <span className="pill-index">[03]</span>
               <span>Non-Euclidean Spatial Kinetics</span>
             </div>
           </div>
         )}
 
-        {/* Scene 3: Team Roster Mini-Pills with Real-time 3D Hover Sync */}
+        {/* Scene 3: Team Roster Mini-Cards with Discipline Codes */}
         {currentChapter.id === 'team' && (
           <div className="team-roster-tray">
             <div className="tray-label">DISCOVER PRACTITIONERS // CLICK 3D ARTIFACT OR MEMBER:</div>
             <div className="roster-grid">
-              {TEAM_MEMBERS.map((member) => (
-                <button
-                  key={member.id}
-                  type="button"
-                  className={`roster-card-btn ${hoveredMemberId === member.id ? 'active' : ''}`}
-                  onClick={() => onSelectMember(member)}
-                  onMouseEnter={() => setHoveredMemberId(member.id)}
-                  onMouseLeave={() => setHoveredMemberId(null)}
-                >
-                  <span className="roster-color-dot" style={{ backgroundColor: member.accentColor }} />
-                  <div className="roster-info">
-                    <span className="roster-name">{member.name}</span>
-                    <span className="roster-role">{member.role}</span>
-                  </div>
-                </button>
-              ))}
+              {TEAM_MEMBERS.map((member) => {
+                const disciplineCodes = {
+                  elena: 'SPATIAL',
+                  kaelen: 'METALLURGY',
+                  sora: 'BOTANY',
+                  marcus: 'TEMPORAL'
+                };
+                return (
+                  <button
+                    key={member.id}
+                    type="button"
+                    className={`roster-card-btn ${hoveredMemberId === member.id ? 'active' : ''}`}
+                    onClick={() => onSelectMember(member)}
+                    onMouseEnter={() => setHoveredMemberId(member.id)}
+                    onMouseLeave={() => setHoveredMemberId(null)}
+                  >
+                    <span className="roster-color-dot" style={{ backgroundColor: member.accentColor }} />
+                    <div className="roster-info">
+                      <div className="roster-top-row">
+                        <span className="roster-name">{member.name}</span>
+                        <span className="roster-code-tag" style={{ color: member.accentColor }}>
+                          [{disciplineCodes[member.id] || 'STRATA'}]
+                        </span>
+                      </div>
+                      <span className="roster-role">{member.role}</span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* Scene 4: Synthesis / Transformation Status */}
+        {/* Scene 4: Synthesis / Curatorial Readout */}
         {currentChapter.id === 'transformation' && (
           <div className="synthesis-status-panel">
             <div className="status-metric-row">
-              <span className="metric-tag">DISCIPLINARY FUSION</span>
-              <span className="metric-val">EQUILIBRIUM ACTIVE</span>
+              <div className="metric-tag-group">
+                <span className="metric-pulse-dot" />
+                <span className="metric-tag">HARMONIC ASTROLABE NEXUS</span>
+              </div>
+              <span className="metric-val">440.0 Hz // EQUILIBRIUM ACTIVE</span>
             </div>
             <div className="status-progress-track">
               <div
@@ -121,25 +136,36 @@ export function StoryOverlay({
           </div>
         )}
 
-        {/* Scene 5: Projects Tray with Real-time 3D Hover Sync */}
+        {/* Scene 5: Projects Tray with Location/Year Metadata */}
         {currentChapter.id === 'projects' && (
           <div className="projects-roster-tray">
             <div className="tray-label">SELECT LIVING MONUMENT TO DECONSTRUCT:</div>
             <div className="projects-grid">
-              {PROJECTS.map((proj) => (
-                <button
-                  key={proj.id}
-                  type="button"
-                  className={`project-card-btn ${hoveredProjectId === proj.id ? 'active' : ''}`}
-                  onClick={() => onSelectProject(proj)}
-                  onMouseEnter={() => setHoveredProjectId(proj.id)}
-                  onMouseLeave={() => setHoveredProjectId(null)}
-                >
-                  <div className="project-badge" style={{ color: proj.accentColor }}>{proj.code}</div>
-                  <div className="project-card-title">{proj.title}</div>
-                  <div className="project-card-cat">{proj.category}</div>
-                </button>
-              ))}
+              {PROJECTS.map((proj) => {
+                const metadata = {
+                  chronos: 'OSLO // 2026',
+                  synapse: 'VENICE // 2025',
+                  auraos: 'GLOBAL // 2026'
+                };
+                return (
+                  <button
+                    key={proj.id}
+                    type="button"
+                    className={`project-card-btn ${hoveredProjectId === proj.id ? 'active' : ''}`}
+                    onClick={() => onSelectProject(proj)}
+                    onMouseEnter={() => setHoveredProjectId(proj.id)}
+                    onMouseLeave={() => setHoveredProjectId(null)}
+                  >
+                    <div className="project-left-group">
+                      <span className="project-badge" style={{ color: proj.accentColor }}>{proj.code}</span>
+                      <span className="project-card-title">{proj.title}</span>
+                    </div>
+                    <div className="project-right-group">
+                      <span className="project-meta-tag">[{metadata[proj.id] || proj.year}]</span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

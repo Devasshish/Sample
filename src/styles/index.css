@@ -264,14 +264,14 @@ html, body {
 }
 
 .story-content-box {
-  max-width: 530px;
+  max-width: 560px;
   pointer-events: auto;
-  background: rgba(10, 12, 17, 0.62);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 32px 36px;
+  background: rgba(10, 12, 17, 0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 30px 34px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
   position: relative;
 }
@@ -297,18 +297,21 @@ html, body {
 
 .story-title {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.65rem);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   margin-bottom: 8px;
-  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 60%, #ff8c42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  word-break: break-word;
 }
 
 .story-subtitle {
   font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 1.2vw, 0.88rem);
   letter-spacing: 0.14em;
   color: var(--accent-amber);
   margin-bottom: 18px;
@@ -400,13 +403,18 @@ html, body {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-secondary);
+  transition: all 0.25s ease;
 }
 
-.pill-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-amber);
+.philosophy-pill:hover {
+  border-color: rgba(255, 107, 53, 0.4);
+  background: rgba(255, 107, 53, 0.06);
+}
+
+.pill-index {
+  color: var(--accent-vermilion);
+  font-weight: 700;
+  font-size: 0.68rem;
 }
 
 /* Scene 3 Team Roster Tray */
@@ -460,6 +468,15 @@ html, body {
 .roster-info {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.roster-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
 }
 
 .roster-name {
@@ -467,6 +484,13 @@ html, body {
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-primary);
+}
+
+.roster-code-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
 }
 
 .roster-role {
@@ -477,9 +501,9 @@ html, body {
 
 /* Scene 4 Synthesis Panel */
 .synthesis-status-panel {
-  background: rgba(18, 20, 28, 0.85);
+  background: rgba(18, 20, 28, 0.88);
   border: 1px solid var(--border-accent);
-  padding: 18px;
+  padding: 18px 20px;
   border-radius: 8px;
   backdrop-filter: blur(14px);
   display: flex;
@@ -490,12 +514,34 @@ html, body {
 .status-metric-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: var(--font-mono);
   font-size: 0.72rem;
 }
 
+.metric-tag-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+  box-shadow: 0 0 8px var(--accent-vermilion);
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 .metric-tag {
   color: var(--text-muted);
+  letter-spacing: 0.06em;
 }
 
 .metric-val {
@@ -557,6 +603,17 @@ html, body {
   transform: translateX(6px);
 }
 
+.project-left-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-right-group {
+  display: flex;
+  align-items: center;
+}
+
 .project-badge {
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -565,16 +622,18 @@ html, body {
 
 .project-card-title {
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.project-card-cat {
+.project-meta-tag {
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--text-muted);
+  color: var(--accent-amber);
+  letter-spacing: 0.06em;
 }
+
 
 /* Scene 6 Apex CTAs */
 .apex-cta-container {
