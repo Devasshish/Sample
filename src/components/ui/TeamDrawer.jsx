@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Sparkles, Activity, Layers, ArrowRight } from 'lucide-react';
+import { X, Layers, ArrowUpRight } from 'lucide-react';
 
 export function TeamDrawer({ member, onClose, onSelectProjectById }) {
   useEffect(() => {
@@ -23,68 +23,65 @@ export function TeamDrawer({ member, onClose, onSelectProjectById }) {
       >
         {/* Header Bar */}
         <div className="drawer-header">
-          <div className="drawer-badge" style={{ borderColor: member.accentColor, color: member.accentColor }}>
-            PRACTITIONER DOSSIER // {member.id.toUpperCase()}
+          <div className="drawer-badge">
+            PRACTITIONER PROFILE / {member.id.toUpperCase()}
           </div>
           <button
             type="button"
             className="drawer-close-btn"
             onClick={onClose}
-            aria-label="Close Member Dossier"
+            aria-label="Close Member Profile"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
 
-        {/* Member Identity */}
+        {/* Member Identity & Workstation Monograph */}
         <div className="drawer-body">
           <div className="member-hero">
             <h2 id="member-name" className="member-name">{member.name}</h2>
-            <div className="member-role" style={{ color: member.accentColor }}>{member.role}</div>
-            <div className="member-domain">{member.domain}</div>
+            <div className="member-role">{member.role}</div>
+            <div className="member-domain">{member.discipline}</div>
           </div>
 
-          {/* Symbolic Artifact Representation */}
-          <div className="artifact-chip-box">
-            <div className="artifact-chip-icon" style={{ backgroundColor: member.accentColor }} />
-            <div>
-              <div className="artifact-chip-label">SYMBOLIC ARTIFACT IN WORLD</div>
-              <div className="artifact-chip-val">{member.symbolicObject}</div>
-            </div>
+          {/* Monograph Reference Tag */}
+          <div className="monograph-chip-box">
+            <div className="monograph-chip-label">ARCHIVE REFERENCE</div>
+            <div className="monograph-chip-val">{member.monographRef}</div>
           </div>
 
-          {/* Personal Manifesto Quote */}
+          {/* Personal Statement Quote */}
           <blockquote className="member-quote">
             "{member.quote}"
           </blockquote>
 
-          {/* Core Philosophy */}
+          {/* Practice Statement */}
           <div className="drawer-section">
-            <h3 className="section-title">RESEARCH MANIFESTO</h3>
-            <p className="manifesto-text">{member.manifesto}</p>
+            <h3 className="section-title">PRACTICE & BACKGROUND</h3>
+            <p className="manifesto-text">{member.statement}</p>
           </div>
 
-          {/* Telemetry Metrics */}
+          {/* Workstation Physical Artifacts */}
           <div className="drawer-section">
-            <h3 className="section-title">TELEMETRY & CAPABILITIES</h3>
-            <div className="metrics-grid">
-              {member.metrics.map((m, idx) => (
-                <div key={idx} className="metric-box">
-                  <div className="metric-label">{m.label}</div>
-                  <div className="metric-val" style={{ color: member.accentColor }}>{m.value}</div>
+            <h3 className="section-title">PHYSICAL WORKSPACE ARTIFACTS</h3>
+            <div className="desk-artifacts-list">
+              {member.deskArtifacts.map((art, idx) => (
+                <div key={idx} className="desk-artifact-item">
+                  <span className="artifact-bullet">·</span>
+                  <span>{art}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Artifacts Led */}
+          {/* Notable Commissions */}
           <div className="drawer-section">
-            <h3 className="section-title">KEY MANIFESTATIONS LED</h3>
+            <h3 className="section-title">SELECTED COMMISSIONS</h3>
             <div className="artifacts-list">
-              {member.artifactsLed.map((art, idx) => (
+              {member.notableCommissions.map((comm, idx) => (
                 <div key={idx} className="artifact-list-item">
-                  <Layers size={14} style={{ color: member.accentColor }} />
-                  <span>{art}</span>
+                  <Layers size={13} className="comm-icon" />
+                  <span>{comm}</span>
                 </div>
               ))}
             </div>

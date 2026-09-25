@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, Radio, CheckCircle, ShieldCheck } from 'lucide-react';
+import { X, Send, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export function TransmissionConsole({ isOpen, onClose, playChime }) {
-  const [channel, setChannel] = useState('commission');
+  const [inquiryType, setInquiryType] = useState('commission');
   const [senderName, setSenderName] = useState('');
   const [senderContact, setSenderContact] = useState('');
+  const [projectLocation, setProjectLocation] = useState('');
   const [dispatchMessage, setDispatchMessage] = useState('');
   const [isSent, setIsSent] = useState(false);
-  const [transmitting, setTransmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -23,20 +24,21 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
     e.preventDefault();
     if (!senderName || !dispatchMessage) return;
 
-    setTransmitting(true);
-    if (playChime) playChime(659.25, 1.2);
+    setSubmitting(true);
+    if (playChime) playChime(440, 0.8);
 
     setTimeout(() => {
-      setTransmitting(false);
+      setSubmitting(false);
       setIsSent(true);
-      if (playChime) playChime(880, 1.5);
-    }, 1200);
+      if (playChime) playChime(523.25, 1.2);
+    }, 1000);
   };
 
   const handleReset = () => {
     setIsSent(false);
     setSenderName('');
     setSenderContact('');
+    setProjectLocation('');
     setDispatchMessage('');
   };
 
@@ -47,84 +49,83 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="console-title"
+        aria-labelledby="inquiry-title"
       >
         <div className="transmission-header">
           <div className="transmission-status-tag">
-            <Radio size={14} className="radio-pulse" />
-            <span>FREQUENCY DISPATCH TERMINAL // CH-440</span>
+            <span>THE LAST LIGHT / STUDIO INQUIRIES</span>
           </div>
           <button
             type="button"
             className="modal-close-btn"
             onClick={onClose}
-            aria-label="Close Transmission Console"
+            aria-label="Close Inquiry Window"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
 
         {isSent ? (
           <div className="transmission-success">
-            <CheckCircle size={48} className="success-icon" />
-            <h3 className="success-title">DISPATCH TRANSMITTED TO THE STRATA</h3>
+            <CheckCircle2 size={40} className="success-icon" />
+            <h3 className="success-title">INQUIRY RECEIVED</h3>
             <p className="success-text">
-              Frequency packet verified and inscribed onto the collective ledger. A cartographer from Atelier Strata will calibrate an acoustic response to <strong>{senderContact || 'your frequency'}</strong>.
+              Thank you for reaching out. A partner from The Last Light will review your brief and reply directly to <strong>{senderContact || 'your email'}</strong> within two studio days.
             </p>
             <button
               type="button"
               className="success-btn"
               onClick={handleReset}
             >
-              TRANSMIT ANOTHER DISPATCH
+              SEND ANOTHER INQUIRY
             </button>
           </div>
         ) : (
           <form className="transmission-form" onSubmit={handleSubmit}>
             <div className="form-intro">
-              <h2 id="console-title" className="console-title">INITIATE STRATA TRANSMISSION</h2>
+              <h2 id="inquiry-title" className="console-title">START A CONVERSATION</h2>
               <p className="console-desc">
-                Broadcast an inquiry directly into our spatial research collective. All communications are decrypted and triaged across our four founding studios.
+                We design architecture, public instruments, and spatial environments for institutions and private commissioners worldwide.
               </p>
             </div>
 
-            {/* Channel Selectors */}
+            {/* Inquiry Category Selectors */}
             <div className="channel-select-group">
-              <label className="field-label">SELECT FREQUENCY BAND:</label>
+              <label className="field-label">NATURE OF INQUIRY</label>
               <div className="channel-chips">
                 <button
                   type="button"
-                  className={`channel-chip ${channel === 'commission' ? 'active' : ''}`}
-                  onClick={() => setChannel('commission')}
+                  className={`channel-chip ${inquiryType === 'commission' ? 'active' : ''}`}
+                  onClick={() => setInquiryType('commission')}
                 >
-                  SPATIAL ARCHITECTURE
+                  ARCHITECTURAL COMMISSION
                 </button>
                 <button
                   type="button"
-                  className={`channel-chip ${channel === 'research' ? 'active' : ''}`}
-                  onClick={() => setChannel('research')}
+                  className={`channel-chip ${inquiryType === 'installation' ? 'active' : ''}`}
+                  onClick={() => setInquiryType('installation')}
                 >
-                  RESEARCH RESIDENCY
+                  SPATIAL INSTALLATION
                 </button>
                 <button
                   type="button"
-                  className={`channel-chip ${channel === 'dialogue' ? 'active' : ''}`}
-                  onClick={() => setChannel('dialogue')}
+                  className={`channel-chip ${inquiryType === 'curatorial' ? 'active' : ''}`}
+                  onClick={() => setInquiryType('curatorial')}
                 >
-                  CURATORIAL INQUIRY
+                  CURATORIAL / EXHIBITION
                 </button>
               </div>
             </div>
 
-            {/* Inputs */}
+            {/* Form Fields */}
             <div className="input-grid">
               <div className="field-box">
-                <label htmlFor="sender-name" className="field-label">NAME / COLLECTIVE *</label>
+                <label htmlFor="sender-name" className="field-label">NAME / ORGANIZATION *</label>
                 <input
                   id="sender-name"
                   type="text"
                   required
-                  placeholder="e.g. Marina K. / Zaha Lab"
+                  placeholder="e.g. Elena Rostova / Studio Nord"
                   value={senderName}
                   onChange={(e) => setSenderName(e.target.value)}
                   className="console-input"
@@ -132,11 +133,12 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
               </div>
 
               <div className="field-box">
-                <label htmlFor="sender-contact" className="field-label">RETURN FREQUENCY (EMAIL / TELECOM)</label>
+                <label htmlFor="sender-contact" className="field-label">EMAIL ADDRESS *</label>
                 <input
                   id="sender-contact"
-                  type="text"
-                  placeholder="frequency@domain.org"
+                  type="email"
+                  required
+                  placeholder="name@organization.com"
                   value={senderContact}
                   onChange={(e) => setSenderContact(e.target.value)}
                   className="console-input"
@@ -145,12 +147,24 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
             </div>
 
             <div className="field-box">
-              <label htmlFor="dispatch-msg" className="field-label">DISPATCH MANIFESTO / PROJECT BRIEF *</label>
+              <label htmlFor="project-location" className="field-label">SITE LOCATION / TIMELINE (OPTIONAL)</label>
+              <input
+                id="project-location"
+                type="text"
+                placeholder="e.g. Kyoto, Japan / Spring 2027"
+                value={projectLocation}
+                onChange={(e) => setProjectLocation(e.target.value)}
+                className="console-input"
+              />
+            </div>
+
+            <div className="field-box">
+              <label htmlFor="dispatch-msg" className="field-label">PROJECT BRIEF OR INQUIRY *</label>
               <textarea
                 id="dispatch-msg"
                 required
                 rows={4}
-                placeholder="Describe your site, inquiry, spatial parameters, or timeline..."
+                placeholder="Outline the site, programmatic requirements, or conceptual goals..."
                 value={dispatchMessage}
                 onChange={(e) => setDispatchMessage(e.target.value)}
                 className="console-textarea"
@@ -158,17 +172,14 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
             </div>
 
             <div className="form-footer">
-              <div className="encryption-notice">
-                <ShieldCheck size={14} />
-                <span>SHA-256 SPATIAL ENCRYPTION ACTIVE</span>
-              </div>
+              <span className="studio-location-tag">STUDIO: ZÜRICH / KYOTO / OSLO</span>
               <button
                 type="submit"
                 className="transmit-submit-btn"
-                disabled={transmitting}
+                disabled={submitting}
               >
-                <Send size={15} />
-                <span>{transmitting ? 'TRANSMITTING PACKET...' : 'TRANSMIT FREQUENCY'}</span>
+                <span>{submitting ? 'SENDING...' : 'SEND INQUIRY'}</span>
+                <Send size={13} />
               </button>
             </div>
           </form>

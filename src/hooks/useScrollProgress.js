@@ -87,7 +87,7 @@ export function useScrollProgress() {
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
         e.preventDefault();
         updateTarget(targetProgressRef.current - 0.08);
-      } else if (e.key >= '1' && e.key <= '6') {
+      } else if (e.key >= '1' && e.key <= '7') {
         const chapterIdx = parseInt(e.key, 10) - 1;
         if (chapterIdx < CHAPTERS.length) {
           const ch = CHAPTERS[chapterIdx];

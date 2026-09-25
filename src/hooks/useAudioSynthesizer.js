@@ -19,21 +19,21 @@ export function useAudioSynthesizer() {
       masterGain.connect(ctx.destination);
       masterGainRef.current = masterGain;
 
-      // Create warm ambient drone layers (Fundamental D: 55Hz, 110Hz, 164.8Hz, 220Hz, 329.6Hz)
-      const freqs = [55, 110, 164.81, 220, 329.63];
+      // Warm, organic late-night studio drone (Eb major / C minor warm harmonics: 65.4Hz, 98Hz, 130.8Hz, 196Hz, 261.6Hz)
+      const freqs = [65.41, 98.0, 130.81, 196.0, 261.63];
       const nodes = freqs.map((freq, i) => {
         const osc = ctx.createOscillator();
         const filter = ctx.createBiquadFilter();
         const gain = ctx.createGain();
 
-        osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+        osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(320 + i * 80, ctx.currentTime);
-        filter.Q.setValueAtTime(2.0, ctx.currentTime);
+        filter.frequency.setValueAtTime(240 + i * 40, ctx.currentTime);
+        filter.Q.setValueAtTime(1.2, ctx.currentTime);
 
-        const individualVolume = 0.05 / (i + 1);
+        const individualVolume = 0.04 / (i + 1);
         gain.gain.setValueAtTime(individualVolume, ctx.currentTime);
 
         osc.connect(filter);
@@ -46,7 +46,7 @@ export function useAudioSynthesizer() {
 
       droneNodesRef.current = nodes;
     } catch (e) {
-      console.warn('Web Audio not supported or failed to initialize', e);
+      console.warn('Web Audio not supported', e);
     }
   }, []);
 
@@ -57,7 +57,7 @@ export function useAudioSynthesizer() {
         audioCtxRef.current.resume();
       }
       if (masterGainRef.current && audioCtxRef.current) {
-        masterGainRef.current.gain.linearRampToValueAtTime(0.25, audioCtxRef.current.currentTime + 1.2);
+        masterGainRef.current.gain.linearRampToValueAtTime(0.22, audioCtxRef.current.currentTime + 1.2);
       }
       setIsMuted(false);
     } else {
@@ -68,7 +68,8 @@ export function useAudioSynthesizer() {
     }
   }, [isMuted, initAudio]);
 
-  const playChime = useCallback((freq = 523.25, duration = 0.8) => {
+  // Soft tactile studio acoustic chime / warm bell
+  const playChime = useCallback((freq = 440, duration = 1.0) => {
     if (isMuted || !audioCtxRef.current) return;
     try {
       const ctx = audioCtxRef.current;
@@ -79,11 +80,11 @@ export function useAudioSynthesizer() {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(freq * 1.5, ctx.currentTime);
-      filter.Q.setValueAtTime(3.0, ctx.currentTime);
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(freq * 1.8, ctx.currentTime);
+      filter.Q.setValueAtTime(1.5, ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.07, ctx.currentTime);
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
 
       osc.connect(filter);
@@ -97,6 +98,7 @@ export function useAudioSynthesizer() {
     }
   }, [isMuted]);
 
+  // Soft tactile lamp switch / room tone shift on chapter changes
   const playTransitionSound = useCallback(() => {
     if (isMuted || !audioCtxRef.current) return;
     try {
@@ -105,24 +107,22 @@ export function useAudioSynthesizer() {
       const gain = ctx.createGain();
       const filter = ctx.createBiquadFilter();
 
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(65.4, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(130.8, ctx.currentTime + 1.0);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(110, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(82.4, ctx.currentTime + 0.6);
 
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(140, ctx.currentTime);
-      filter.frequency.linearRampToValueAtTime(450, ctx.currentTime + 0.8);
-      filter.frequency.linearRampToValueAtTime(120, ctx.currentTime + 1.2);
+      filter.frequency.setValueAtTime(260, ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
 
       osc.connect(filter);
       filter.connect(gain);
       gain.connect(masterGainRef.current || ctx.destination);
 
       osc.start();
-      osc.stop(ctx.currentTime + 1.2);
+      osc.stop(ctx.currentTime + 0.6);
     } catch (e) {
       // safe fallback
     }

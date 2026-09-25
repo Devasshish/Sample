@@ -7,7 +7,7 @@ export function NavigationOverlay({
   onNavigateChapter
 }) {
   return (
-    <nav className="navigation-overlay" aria-label="Story Chapters Navigation">
+    <nav className="navigation-overlay" aria-label="Studio Chronology Navigation">
       {/* Chapter Indicator Bar */}
       <div className="chapter-track">
         {CHAPTERS.map((ch, index) => {

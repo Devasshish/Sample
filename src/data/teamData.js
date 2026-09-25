@@ -1,86 +1,87 @@
 export const TEAM_MEMBERS = [
   {
     id: 'elena',
-    name: 'Dr. Elena Vance',
-    role: 'Principal Spatial Cartographer',
-    domain: 'Acoustic Topologies & Waveform Solidification',
-    symbolicObject: 'The Resonant Gyro-Prism',
-    accentColor: '#ff6b35',
-    ambientGlow: 'rgba(255, 107, 53, 0.35)',
-    orbitRadius: 2.8,
-    orbitAngle: 0,
-    position: [-2.4, 0.3, 0.4],
-    shapeType: 'gyroprism',
-    quote: 'Space is never empty; it is simply awaiting the right harmonic frequency to take solid form.',
-    manifesto: 'By transforming ultrasound pressure fields into dense parametric lattices, we eliminate the false dichotomy between intangible acoustic music and physical architecture.',
-    metrics: [
-      { label: 'Harmonic Coherence', value: '99.4%' },
-      { label: 'Crystalline Modulus', value: '412 GPa' },
-      { label: 'Spatial Latency', value: '< 2.4 ms' }
+    name: 'Elena Rostova',
+    role: 'Creative Director & Architect',
+    discipline: 'Spatial Poetics & Masterplanning',
+    quote: 'Architecture begins when you subtract everything decorative and arrive at structural truth.',
+    statement: 'Trained at the ETH Zürich and Kyoto Institute, Elena directs spatial geometry, proportions, and daylight choreography. Her desk is grounded in hand drafting, trace paper, and tactile prototypes.',
+    deskArtifacts: [
+      'Raw brass drafting T-square & compass',
+      'Charcoal floorplan studies on Japanese trace paper',
+      'Leica M11 with 35mm Summilux prime lens',
+      'Slip-cast ceramic espresso vessel'
     ],
-    artifactsLed: ['Project Chronos', 'Acoustic Vault 09', 'Lumen Sanctuary']
+    deskPosition: [-2.1, 0.78, -0.6],
+    monographRef: 'Folio I: The Grammar of Stillness',
+    notableCommissions: ['Komorebi Pavilion', 'Mies Memorial Archive']
   },
   {
-    id: 'kaelen',
-    name: 'Kaelen Thorne',
-    role: 'Kinetic Metallurgist',
-    domain: 'Procedural Shader Physics & Fluid Memory',
-    symbolicObject: 'The Liquid Mercury Toroid',
-    accentColor: '#e5b869',
-    ambientGlow: 'rgba(229, 184, 105, 0.35)',
-    orbitRadius: 2.4,
-    orbitAngle: 1.6,
-    position: [-0.8, -0.6, 1.2],
-    shapeType: 'toroid',
-    quote: 'If a digital substance lacks tactile inertia and micro-friction, it cannot resonate with the human nervous system.',
-    manifesto: 'We engineer custom GPU physics pipelines calculating sub-surface light dispersion inside synthetic metallurgical fluids that remember tactile human contact.',
-    metrics: [
-      { label: 'Kinetic Viscosity', value: '0.88 cSt' },
-      { label: 'Shader Pass Density', value: '128 spp' },
-      { label: 'Surface Friction', value: '0.04 μ' }
+    id: 'marcus',
+    name: 'Marcus Vance',
+    role: 'Spatial Sculptor & 3D Lead',
+    discipline: 'Physical Prototyping & Form Studies',
+    quote: 'If a digital surface doesn\'t possess tactile inertia and grain, it will never touch the human spirit.',
+    statement: 'Marcus translates theoretical mass into physical geometry. He moves continuously between high-precision CAD simulations and workshop CNC milling, 3D resin casting, and hand polishing.',
+    deskArtifacts: [
+      'Dual color-calibrated matte studio displays',
+      'Clear cured photopolymer 3D maquettes',
+      'Mitutoyo digital vernier calipers',
+      'Custom aluminum mechanical ortholinear keyboard'
     ],
-    artifactsLed: ['Liquid Horizon OS', 'Kinetic Facade VII', 'Mercury Pavilion']
+    deskPosition: [-1.0, 0.78, -0.8],
+    monographRef: 'Folio II: Tectonic Resistance',
+    notableCommissions: ['Aetheria Chronometer', 'Cantilever House 04']
   },
   {
     id: 'sora',
     name: 'Sora Takahashi',
-    role: 'Computational Botanist',
-    domain: 'Ecological Systems & Bio-Parametric Growth',
-    symbolicObject: 'The Fractal Flora Monolith',
-    accentColor: '#5ce1b6',
-    ambientGlow: 'rgba(92, 225, 182, 0.35)',
-    orbitRadius: 2.6,
-    orbitAngle: 3.2,
-    position: [1.1, 0.7, -0.7],
-    shapeType: 'fractal',
-    quote: 'We do not build machines to subdue the earth; we weave algorithmic organs that breathe with local ecology.',
-    manifesto: 'Through cellular automata tuned to biological mycelial propagation, we generate self-assembling geometries that adapt to wind, moisture, and ambient carbon footprints.',
-    metrics: [
-      { label: 'Mycelial Density', value: '3.4M nodes' },
-      { label: 'Adaptive Growth', value: '98.8%' },
-      { label: 'Carbon Neutrality', value: '-12.6 kg' }
+    role: 'Creative Technologist & Systems Lead',
+    discipline: 'Generative Computation & GLSL Shaders',
+    quote: 'Algorithms shouldn\'t behave like machines; they should grow like lichen across weathered stone.',
+    statement: 'Sora bridges hardware micro-controllers, custom GLSL lighting shaders, and generative mathematical systems that give our architectural installations dynamic living behavior.',
+    deskArtifacts: [
+      'Ultrawide curved anti-glare display running shaders',
+      'Braided silicone cabling & sensor breadboards',
+      'Grid-ruled notebook of mathematical equations',
+      'Anodized black aluminum field laptop'
     ],
-    artifactsLed: ['Synapse Pavilion', 'Bio-Tectonic Skin', 'The Living Spores']
+    deskPosition: [0.1, 0.78, -0.7],
+    monographRef: 'Folio III: Algorithmic Topography',
+    notableCommissions: ['Kinetic Facade V', 'Neural Horizon OS']
   },
   {
-    id: 'marcus',
-    name: 'Marcus Sterling',
-    role: 'Director of Temporal Architecture',
-    domain: 'Relativistic Pacing & Spatial Wayfinding',
-    symbolicObject: 'The Chrono-Astrolabe Monolith',
-    accentColor: '#a78bfa',
-    ambientGlow: 'rgba(167, 139, 250, 0.35)',
-    orbitRadius: 2.7,
-    orbitAngle: 4.8,
-    position: [2.5, -0.2, 0.6],
-    shapeType: 'astrolabe',
-    quote: 'Time is the purest material we sculpt. Without deliberate spatial rhythm, architecture decays into mere geometry.',
-    manifesto: 'Directing the continuous deceleration and acceleration of visual attention across spatial landscapes, creating experiences that linger permanently in spatial memory.',
-    metrics: [
-      { label: 'Pacing Retention', value: '94.2%' },
-      { label: 'Temporal Drift', value: '0.001 s' },
-      { label: 'Spatial Gravity', value: '1.00 G' }
+    id: 'maya',
+    name: 'Maya Lindqvist',
+    role: 'Cinematographer & Motion Director',
+    discipline: 'Temporal Pacing & Lens Optics',
+    quote: 'Light is the ultimate narrator. The way a shadow crawls across raw concrete tells more than pages of prose.',
+    statement: 'Maya controls the camera perspective, optics, and pacing of our spatial narratives. With a background in Scandinavian documentary cinema, she insists on natural light and human scale.',
+    deskArtifacts: [
+      'High-CRI reference grading monitor',
+      'Sekonic L-858D digital incident light meter',
+      'Cooke Panchro 50mm cinema prime lens',
+      'Pinned 35mm film contact strips and storyboards'
     ],
-    artifactsLed: ['AuraOS Spatial System', 'Temporal Oculus', 'Vesper Observatory']
+    deskPosition: [1.2, 0.78, -0.6],
+    monographRef: 'Folio IV: The Speed of Shadows',
+    notableCommissions: ['Nordic Solstice Film', 'The Ephemeral Vault']
+  },
+  {
+    id: 'julian',
+    name: 'Julian Thorne',
+    role: 'Material Researcher & Strategist',
+    discipline: 'Tactile Mineralogy & Material Lifecycles',
+    quote: 'Every physical material holds geologic memory. We honor that memory through restraint.',
+    statement: 'Julian sources and tests our physical palette—from honed travertine and scorched cedar to acoustic wool and recycled aluminum—ensuring every built space ages with grace.',
+    deskArtifacts: [
+      'Tray of honed Carrara marble & travertine tiles',
+      'Oxidized patinated brass sample ingots',
+      'Heavy Belgian linen swatches',
+      'Open design monographs on Scandinavian Brutalism'
+    ],
+    deskPosition: [2.3, 0.78, -0.8],
+    monographRef: 'Folio V: Mineral & Grain',
+    notableCommissions: ['Cenote Sanctuary', 'Atelier Stone Library']
   }
 ];

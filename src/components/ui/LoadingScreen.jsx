@@ -2,33 +2,33 @@ import React, { useState, useEffect } from 'react';
 
 export function LoadingScreen({ onLoaded }) {
   const [percent, setPercent] = useState(0);
-  const [phase, setPhase] = useState('CALIBRATING GRAVITATIONAL FIELD');
+  const [phase, setPhase] = useState('PREPARING THE WORKSHOP');
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
     const phases = [
-      'CALIBRATING GRAVITATIONAL FIELD',
-      'ALIGNING TECTONIC MONOLITHS',
-      'GENERATING ACOUSTIC RESONANCE',
-      'ENTERING ATELIER STRATA'
+      'PREPARING THE WORKSHOP',
+      'ALIGNING PHYSICAL MATERIALS & SAMPLES',
+      'CALIBRATING DAYLIGHT CHOREOGRAPHY',
+      'ENTERING THE STUDIO — 02:47 AM'
     ];
 
     let current = 0;
     const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 8) + 4;
+      current += Math.floor(Math.random() * 8) + 5;
       if (current >= 100) {
         current = 100;
         setPercent(100);
-        setPhase('EXPERIENCE SYNCHRONIZED');
+        setPhase('STUDIO READY');
         clearInterval(interval);
-        setTimeout(() => setFadeOut(true), 400);
-        setTimeout(() => onLoaded(), 900);
+        setTimeout(() => setFadeOut(true), 350);
+        setTimeout(() => onLoaded(), 850);
       } else {
         setPercent(current);
         const phaseIdx = Math.min(phases.length - 1, Math.floor((current / 100) * phases.length));
         setPhase(phases[phaseIdx]);
       }
-    }, 45);
+    }, 40);
 
     return () => clearInterval(interval);
   }, [onLoaded]);
@@ -36,12 +36,11 @@ export function LoadingScreen({ onLoaded }) {
   return (
     <div className={`loading-screen ${fadeOut ? 'fade-out' : ''}`}>
       <div className="loader-center-box">
-        <div className="loader-emblem">
-          <div className="emblem-spinner" />
-          <div className="emblem-dot" />
-        </div>
+        <div className="loader-monogram">LL</div>
 
-        <div className="loader-brand">ATELIER STRATA</div>
+        <div className="loader-brand">THE LAST LIGHT</div>
+        <div className="loader-sub">SPATIAL LABORATORY & ARCHITECTURE</div>
+
         <div className="loader-phase">{phase}</div>
 
         <div className="loader-progress-track">

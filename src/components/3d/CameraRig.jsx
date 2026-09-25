@@ -6,8 +6,10 @@ import { CHAPTERS } from '../../data/storyData';
 export function CameraRig({ progress = 0, reducedMotion = false }) {
   const { camera } = useThree();
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const currentPosRef = useRef(new THREE.Vector3(-0.6, 1.6, 8.2));
-  const currentLookAtRef = useRef(new THREE.Vector3(1.8, 0.1, 0));
+
+  // Initial position matching Scene 01 ARRIVAL
+  const currentPosRef = useRef(new THREE.Vector3(-2.2, 1.4, 7.8));
+  const currentLookAtRef = useRef(new THREE.Vector3(0.2, 1.2, 0.5));
 
   // Pre-allocated vectors to prevent GC allocations inside useFrame
   const targetPosRef = useRef(new THREE.Vector3());
@@ -25,11 +27,11 @@ export function CameraRig({ progress = 0, reducedMotion = false }) {
 
   useFrame((state, delta) => {
     // Parallax smoothing
-    const mouseLerp = reducedMotion ? 0 : 0.05;
+    const mouseLerp = reducedMotion ? 0 : 0.04;
     mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * mouseLerp;
     mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * mouseLerp;
 
-    // Find bounding chapters based on current progress
+    // Find bounding chapters based on current progress across 7 scenes
     let startChapter = CHAPTERS[0];
     let endChapter = CHAPTERS[CHAPTERS.length - 1];
     let localT = 0;
@@ -58,7 +60,7 @@ export function CameraRig({ progress = 0, reducedMotion = false }) {
       }
     }
 
-    // Smoothstep interpolation for cinematic easing
+    // Smooth cubic hermite / smoothstep interpolation for weighted cinematic feel
     const smoothT = localT * localT * (3 - 2 * localT);
 
     const targetX = THREE.MathUtils.lerp(startChapter.cameraPos[0], endChapter.cameraPos[0], smoothT);
@@ -69,18 +71,27 @@ export function CameraRig({ progress = 0, reducedMotion = false }) {
     const lookY = THREE.MathUtils.lerp(startChapter.cameraTarget[1], endChapter.cameraTarget[1], smoothT);
     const lookZ = THREE.MathUtils.lerp(startChapter.cameraTarget[2], endChapter.cameraTarget[2], smoothT);
 
-    // Apply parallax offset
-    const parallaxIntensity = reducedMotion ? 0 : 0.4;
-    const finalPosX = targetX + mouseRef.current.x * parallaxIntensity;
-    const finalPosY = targetY + mouseRef.current.y * parallaxIntensity * 0.5;
+    // Subtle handheld operator breathing movement (very slow, organic)
+    const time = state.clock.elapsedTime;
+    const handheldSwayX = reducedMotion ? 0 : Math.sin(time * 0.4) * 0.012;
+    const handheldSwayY = reducedMotion ? 0 : Math.cos(time * 0.5) * 0.008;
+
+    // Apply gentle mouse parallax offset
+    const parallaxIntensity = reducedMotion ? 0 : 0.25;
+    const finalPosX = targetX + mouseRef.current.x * parallaxIntensity + handheldSwayX;
+    const finalPosY = targetY + mouseRef.current.y * parallaxIntensity * 0.4 + handheldSwayY;
     const finalPosZ = targetZ;
 
-    // Zero-allocation vector lerping
-    targetPosRef.current.set(finalPosX, finalPosY, finalPosZ);
-    targetLookAtRef.current.set(lookX, lookY, lookZ);
+    const finalLookX = lookX + mouseRef.current.x * (parallaxIntensity * 0.4);
+    const finalLookY = lookY + mouseRef.current.y * (parallaxIntensity * 0.2);
+    const finalLookZ = lookZ;
 
-    currentPosRef.current.lerp(targetPosRef.current, 0.1);
-    currentLookAtRef.current.lerp(targetLookAtRef.current, 0.1);
+    // Smooth weighted camera damping (simulating physical crane & dolly mass)
+    targetPosRef.current.set(finalPosX, finalPosY, finalPosZ);
+    targetLookAtRef.current.set(finalLookX, finalLookY, finalLookZ);
+
+    currentPosRef.current.lerp(targetPosRef.current, 0.07);
+    currentLookAtRef.current.lerp(targetLookAtRef.current, 0.07);
 
     camera.position.copy(currentPosRef.current);
     camera.lookAt(currentLookAtRef.current);

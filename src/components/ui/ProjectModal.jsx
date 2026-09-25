@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, CheckCircle2, Cpu, Globe, Calendar, Compass } from 'lucide-react';
+import { X, Check, MapPin, Calendar, Layers } from 'lucide-react';
 
 export function ProjectModal({ project, onClose }) {
   useEffect(() => {
@@ -24,16 +24,16 @@ export function ProjectModal({ project, onClose }) {
         {/* Modal Header */}
         <div className="modal-header">
           <div className="modal-meta-row">
-            <span className="modal-code-badge" style={{ color: project.accentColor }}>{project.code}</span>
+            <span className="modal-code-badge">{project.code}</span>
             <span className="modal-category">{project.category}</span>
           </div>
           <button
             type="button"
             className="modal-close-btn"
             onClick={onClose}
-            aria-label="Close Project Modal"
+            aria-label="Close Case Study"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
 
@@ -43,53 +43,49 @@ export function ProjectModal({ project, onClose }) {
           <div className="modal-subtitle">{project.subtitle}</div>
           <div className="modal-location-row">
             <div className="loc-item">
-              <Globe size={14} />
+              <MapPin size={13} />
               <span>{project.location}</span>
             </div>
             <div className="loc-item">
-              <Calendar size={14} />
+              <Calendar size={13} />
               <span>{project.year}</span>
             </div>
           </div>
         </div>
 
-        {/* Summary */}
+        {/* Modal Content */}
         <div className="modal-body">
+          {/* Material Palette Callout */}
+          <div className="material-palette-box">
+            <div className="palette-label">PHYSICAL MATERIAL SPECIFICATION</div>
+            <div className="palette-val">{project.materialPalette}</div>
+          </div>
+
           <p className="project-summary-text">{project.summary}</p>
 
-          {/* Highlights */}
+          {/* Details / Architectural Innovations */}
           <div className="modal-section">
-            <h3 className="modal-section-title">ENGINEERING INNOVATIONS</h3>
+            <h3 className="modal-section-title">STRUCTURAL & SPATIAL EXECUTION</h3>
             <div className="highlights-grid">
-              {project.highlights.map((h, i) => (
+              {project.details.map((detail, i) => (
                 <div key={i} className="highlight-item">
-                  <CheckCircle2 size={16} style={{ color: project.accentColor, flexShrink: 0 }} />
-                  <span>{h}</span>
+                  <span className="highlight-bullet">―</span>
+                  <span>{detail}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Technical Specs */}
+          {/* Technical Specifications */}
           <div className="modal-section">
-            <h3 className="modal-section-title">TECHNICAL ARCHITECTURE</h3>
+            <h3 className="modal-section-title">ARCHITECTURAL SPECIFICATIONS</h3>
             <div className="specs-table">
-              <div className="spec-row">
-                <span className="spec-key">System Latency:</span>
-                <span className="spec-val" style={{ color: project.accentColor }}>{project.technicalSpec.latency}</span>
-              </div>
-              <div className="spec-row">
-                <span className="spec-key">Material Composition:</span>
-                <span className="spec-val">{project.technicalSpec.materials}</span>
-              </div>
-              <div className="spec-row">
-                <span className="spec-key">Spatial Footprint:</span>
-                <span className="spec-val">{project.technicalSpec.dimensions}</span>
-              </div>
-              <div className="spec-row">
-                <span className="spec-key">Energy Harvesting:</span>
-                <span className="spec-val">{project.technicalSpec.powerSource}</span>
-              </div>
+              {Object.entries(project.specifications).map(([key, val]) => (
+                <div key={key} className="spec-row">
+                  <span className="spec-key">{key.replace(/([A-Z])/g, ' $1').toUpperCase()}:</span>
+                  <span className="spec-val">{val}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,168 +1,91 @@
-# ATELIER STRATA
-> **The Living Cartography of Latent Forms**  
-> An immersive, scroll-driven 3D digital experience exploring computational mineralogy, tactile topologies, and the architectural collective of Atelier Strata.
+# THE LAST LIGHT
+> **Design & Spatial Laboratory**  
+> An immersive, cinematic physical 3D experience set inside a contemporary creative studio during the transition from late night to dawn.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Stack: React + Three.js + R3F + Vite](https://img.shields.io/badge/Stack-React%20%7C%20Three.js%20%7C%20R3F%20%7C%20Vite-orange.svg)](https://vitejs.dev/)
+[![Stack: React + Three.js + R3F + Vite](https://img.shields.io/badge/Stack-React%20%7C%20Three.js%20%7C%20R3F%20%7C%20Vite-black.svg)](https://vitejs.dev/)
 
 ---
 
-## 🌟 Creative Concept & Narrative
+## 🌟 Creative Concept & Art Direction
 
-**Atelier Strata** is a fictional creative collective operating at the nexus of computational geology, spatial poetics, and architectural kinetics. 
+**The Last Light** is a fictional creative studio and spatial architecture laboratory. 
 
-Rejecting the cold, generic cybernetic tropes of digital portfolios, the 3D world exists as a **subterranean and atmospheric geological continuum**. Here, algorithmic ideas take on physical substance—crystallizing into monolithic mineral monuments, resonant acoustic chambers, bio-cellular pavilions, and heliotropic spatial instruments.
+Rejecting generic cybernetic tropes, floating polygons, sci-fi HUDs, and artificial orange neon glows, the experience is grounded entirely in **realism, tactile craft, physical architecture, and cinematic lighting**.
 
-The entire experience is organized as a single continuous cinematic journey where scrolling directly orchestrates the spatial camera choreography, lighting transformations, and story unfoldment.
+The user travels physically through a genuine design workshop between 02:47 AM and 06:18 AM:
+- **Architecture**: Polished concrete floors with expansion joints, board-formed concrete perimeter walls, industrial factory-style steel mullion windows overlooking a distant quiet night skyline, structural dark oak ceiling beams, and suspended architectural track lights.
+- **Physicality**: Solid smoked oak worktables, Anglepoise/Tolomeo task lamps, physical basswood study models, drafting trace paper sketches with hand-drawn charcoal lines, dual color-calibrated monitors, cinema prime lenses, light meters, and brass material sample trays (Carrara marble, scorched Yakisugi cedar, patinated brass, acoustic felt).
+- **Lighting as Narrative**: The story progresses through the passage of time—from a quiet, solitary entrance light at 02:47 AM, through practical desk lamps and monitor glows, culminating in low-angle golden morning dawn streaming through the floor-to-ceiling glass wall at 06:18 AM.
 
 ---
 
-## 🗺️ The Six Chapter Sequence
+## 🗺️ The Seven Scene Progression
 
-| Scene | Chapter Code | Title | Spatial & Narrative Event |
+| Scene | Time | Title | Spatial & Architectural Event |
 |---|---|---|---|
-| **01** | `INIT.00` | **THE AWAKENING** | Emergence before the Primordial Monolith suspended above deep undulating topological mist. Atmospheric dust drifts through the camera path. |
-| **02** | `STRATA.01` | **THE TECTONIC FORGE** | The camera descends into the subterranean canyon. The core unfolds into nested titanium astrolabe rings and faceted crystalline gears. |
-| **03** | `FACULTY.02` | **THE CARTOGRAPHERS** | Exploration of the 4 founding practitioners, each represented by their own unique 3D symbolic artifact (Gyro-Prism, Mercury Toroid, Fractal Flora, Chrono-Astrolabe) with interactive inspection dossiers. |
-| **04** | `NEXUS.03` | **THE SYNTHESIS** | The transformation sequence: the 4 independent artifacts gravitate inward and snap into an intertwined hyper-monolith with harmonic energy filaments. |
-| **05** | `REALMS.04` | **TANGIBLE MONUMENTS** | Journey along three living architectural case studies (Project Chronos Sundial, Synapse Bioluminescent Biome, AuraOS Spatial Interface) with interactive technical specification modals. |
-| **06** | `HORIZON.05` | **THE OPEN HORIZON** | A wide-angle panoramic view reveals the complete planetary constellation, inviting visitors to initiate dispatches via the interactive Transmission Console. |
+| **01** | `02:47 AM` | **THE ARRIVAL** | Exterior vestibule and heavy glass doorway. A solitary warm tungsten sconce casts a pool of light inside against the quiet dark. Minimal editorial title: *"Some ideas begin long after everyone else has gone home."* |
+| **02** | `03:14 AM` | **THE STUDIO** | Smooth camera tracking into the open-plan workshop. Reveals solid oak layout tables, concrete pillars, stacked design folios, and quiet monitors. |
+| **03** | `03:52 AM` | **THE COLLECTIVE** | Dollies across 5 distinct practitioner workstations: Elena Rostova (Creative Director), Marcus Vance (Spatial Sculptor), Sora Takahashi (Systems Lead), Maya Lindqvist (Cinematographer), and Julian Thorne (Material Researcher). |
+| **04** | `04:30 AM` | **THE PROCESS** | Physical transformation chain along the layout bench: `QUESTION → SKETCH → MODEL → CODE → MOTION → EXPERIENCE` represented by real objects (letterpress note, trace roll, basswood maquette, code display, motion screen, finished artifact). |
+| **05** | `05:08 AM` | **THE PULSE** | Coordinated studio activation. Desk lamps snap on with warm 2700K tungsten glow, displays illuminate with calibrated diagrams, and workstations synchronize. |
+| **06** | `05:42 AM` | **THE WORK** | Three built physical commissions on exhibition pedestals: Pavilion Komorebi (Nagano), Aetheria Chronometer (Copenhagen), and Cenote Sound Sanctuary (Oaxaca). |
+| **07** | `06:18 AM` | **DAWN** | Camera pulls back to a wide architectural vantage point as natural morning sunlight washes through the industrial glass wall, casting long shadows across concrete and oak. *"THE WORK CONTINUES."* |
 
 ---
 
-## 👥 The Four Practitioners
+## 👥 The Five Practitioners & Workspaces
 
-1. **Dr. Elena Vance** — *Principal Spatial Cartographer*
-   - **Symbolic Artifact**: The Resonant Gyro-Prism (Refractive faceted octahedron casting amber caustics)
-   - **Domain**: Acoustic Topologies & Waveform Solidification
-   - **Focus**: Translating ultrasound pressure fields into dense parametric lattices.
-2. **Kaelen Thorne** — *Kinetic Metallurgist*
-   - **Symbolic Artifact**: The Liquid Mercury Toroid (Iridescent champagne-gold knotted toroid)
-   - **Domain**: Procedural Shader Physics & Fluid Memory
-   - **Focus**: Non-Newtonian digital metals that respond to human tactile contact.
-3. **Sora Takahashi** — *Computational Botanist*
-   - **Symbolic Artifact**: The Fractal Flora Monolith (Parametric blooming mycelial petals)
-   - **Domain**: Ecological Systems & Bio-Parametric Growth
-   - **Focus**: Algorithmic organs that breathe and metabolize ambient light.
-4. **Marcus Sterling** — *Director of Temporal Architecture*
-   - **Symbolic Artifact**: The Chrono-Astrolabe Monolith (Nested celestial obsidian rings)
-   - **Domain**: Relativistic Pacing & Spatial Wayfinding
-   - **Focus**: Sculpting temporal deceleration and spatial memory retention.
-
----
-
-## 🏛️ Tangible Projects
-
-- **Project Chronos (Oslo Fjord, Norway)**: A 42-meter titanium and optical crystal sundial projecting daylight into public transit hubs.
-- **Synapse Pavilion (Venice & Zurich)**: A responsive mycelial canopy woven with bioluminescent dinoflagellates that illuminate from human breath.
-- **AuraOS Spatial System**: A volumetric operating interface utilizing ultrasound phased arrays to exert tangible micro-haptic resistance in 3D space.
+1. **Elena Rostova** — *Creative Director & Architect*
+   - **Workspace**: Angled drafting board, charcoal floorplans on Japanese trace paper, heavy brass T-square, Leica M11 camera with prime lens, ceramic espresso cup, Anglepoise lamp.
+   - **Statement**: *"Architecture begins when you subtract everything decorative and arrive at structural truth."*
+2. **Marcus Vance** — *Spatial Sculptor & 3D Lead*
+   - **Workspace**: Dual matte studio displays running wireframe CAD geometry, clear cured resin 3D maquettes on walnut block, mechanical keyboard, over-ear studio headphones.
+   - **Statement**: *"If a digital surface doesn't possess tactile inertia and grain, it will never touch the human spirit."*
+3. **Sora Takahashi** — *Creative Technologist & Systems Lead*
+   - **Workspace**: Ultrawide curved display running custom GLSL shaders and algorithmic calculations, sensor breadboard with subtle micro-LEDs, anodized black field laptop.
+   - **Statement**: *"Algorithms shouldn't behave like machines; they should grow like lichen across weathered stone."*
+4. **Maya Lindqvist** — *Cinematographer & Motion Director*
+   - **Workspace**: High-CRI reference grading monitor with video timeline, Cooke 50mm cinema prime lens, Sekonic digital light meter, pinned 35mm film contact strips.
+   - **Statement**: *"Light is the ultimate narrator. The way a shadow crawls across raw concrete tells more than pages of prose."*
+5. **Julian Thorne** — *Material Researcher & Strategist*
+   - **Workspace**: Solid brass sample tray with honed Carrara marble tile, scorched Yakisugi cedar, oxidized brass ingot, acoustic wool felt, open hardcover architecture monograph.
+   - **Statement**: *"Every physical material holds geologic memory. We honor that memory through restraint."*
 
 ---
 
-## 🛠️ Technology Stack
+## 🏛️ Built Architectural Commissions
 
-- **Core**: React 18, Vite 5
-- **3D Engine**: Three.js, React Three Fiber (`@react-three/fiber`), `@react-three/drei`
-- **Animation & Motion**: Critically-damped spring interpolation, GSAP, requestAnimationFrame loop
-- **Sound**: Native Web Audio API procedural synthesizer (harmonic drone layers + interactive chimes, zero external assets)
-- **Icons**: Lucide React
-- **Typography**: Google Fonts (`Syne`, `Space Grotesk`, `Inter`)
-- **Styling**: Vanilla CSS Design System with custom properties, glassmorphism, and responsive clamps
+- **Pavilion Komorebi (Nagano Alpine Forest, Japan)**: Interlocking charred Yakisugi cedar structure filtering natural daylight like sunlight through forest leaves without metal fasteners.
+- **Aetheria Chronometer (Nordhavn Waterfront, Copenhagen)**: A 5.2m kinetic tidal timepiece in gunmetal bronze and optical sapphire driven by the rise and fall of the Baltic Sea tide.
+- **Cenote Sound Sanctuary (Sierra Norte, Oaxaca, Mexico)**: A subterranean acoustic sanctuary of rammed terracotta earth and a monolithic basalt pool focusing ambient rainfall acoustics.
 
 ---
 
-## 📁 Project Architecture
+## 🛠️ Tech Stack & Implementation Details
 
-```text
-Sample/
-├── index.html                   # HTML entry with typography and SEO meta
-├── package.json                 # Project dependencies & scripts
-├── vite.config.js               # Vite configuration (port 5175)
-├── src/
-│   ├── main.jsx                 # Application entry point
-│   ├── App.jsx                  # Main coordinator (Canvas + UI state)
-│   ├── components/
-│   │   ├── 3d/
-│   │   │   ├── ExperienceCanvas.jsx    # Root R3F Canvas & lighting setup
-│   │   │   ├── CameraRig.jsx           # Choreographed camera timeline & parallax
-│   │   │   ├── PrimordialCore.jsx      # Core monolith astrolabe in Scene 1 & 2
-│   │   │   ├── TeamMonoliths.jsx       # 4 team member artifacts & transformation core
-│   │   │   ├── ProjectMonuments.jsx    # 3 architectural monuments in Scene 5
-│   │   │   ├── TopologicalTerrain.jsx  # Procedural geological ripple terrain
-│   │   │   └── AtmosphericDust.jsx     # Instanced particulate drift system
-│   │   └── ui/
-│   │       ├── OrientationHeader.jsx   # Top telemetry, audio, and motion controls
-│   │       ├── NavigationOverlay.jsx   # Chapter jumps and global scroll track
-│   │       ├── StoryOverlay.jsx        # Scroll-driven narrative typography
-│   │       ├── TeamDrawer.jsx          # Slide-in practitioner dossier panel
-│   │       ├── ProjectModal.jsx        # Architectural case study modal
-│   │       ├── TransmissionConsole.jsx # Interactive dispatch terminal modal
-│   │       └── LoadingScreen.jsx       # Cinematic progress calibration loader
-│   ├── data/
-│   │   ├── storyData.js         # Chapter ranges, camera keyframes, narrative copy
-│   │   ├── teamData.js          # Practitioner metadata, metrics, and quotes
-│   │   └── projectData.js       # Case study specifications, highlights, locations
-│   ├── hooks/
-│   │   ├── useScrollProgress.js     # Smooth lerped normalized scroll [0, 1]
-│   │   ├── useAudioSynthesizer.js   # Generative Web Audio API drone & chimes
-│   │   └── useReducedMotion.js      # Accessibility prefers-reduced-motion hook
-│   └── styles/
-│       └── index.css            # Unified museum-grade styling system
-```
+- **React 18** with functional components & custom state hooks
+- **Three.js & React Three Fiber (R3F)** for the 3D studio environment
+- **Custom Procedural Texture Engine**: Real-time canvas textures for drafting sketches, 3D CAD viewports, GLSL code editors, DaVinci timelines, and concrete floor expansion joints
+- **Web Audio Synthesizer**: Organic, quiet analog ambient drone chords with lowpass filters and tactile mechanical lamp switch tones
+- **Editorial Typography**: Google Fonts (`Cormorant Garamond`, `Plus Jakarta Sans`, `JetBrains Mono`)
+- **Vite 5** for bundling and fast HMR
 
 ---
 
-## ⚡ Performance Engineering Decisions
+## 🚀 Getting Started
 
-1. **Procedural Geometry Generation**:
-   - Zero bulky 50MB external 3D model downloads. Geometries (toruses, octahedrons, geodesic domes, astrolabe rings) are generated procedurally in memory, ensuring instant load time and zero 404 network failure risks.
-2. **BufferGeometry & Instancing**:
-   - The atmospheric particulate dust uses a single instanced `BufferGeometry` with `Float32Array` buffers, rendering hundreds of drifting particles in a single draw call.
-3. **Adaptive Pixel Ratio Clamp**:
-   - `dpr={[1, Math.min(window.devicePixelRatio || 1, 2)]}` prevents high-DPI retina screens from rendering at 3x/4x resolution, guaranteeing 60 FPS across laptops and tablets.
-4. **Disposal & Re-render Isolation**:
-   - Camera calculations run inside Three.js `useFrame` using refs rather than triggering React component state updates on every frame.
-5. **No External Audio Assets**:
-   - Sound is synthesized dynamically on-the-fly using the browser's native `AudioContext` with zero latency, zero bandwidth, and zero network requests.
-
----
-
-## 📱 Responsive & Accessibility Strategy
-
-- **Mobile Viewports (`< 768px`)**:
-  - The UI seamlessly adapts: chapter step labels collapse to compact pips, typography scales down cleanly using `clamp()`, and touch swipe gestures directly control the 3D camera.
-- **Accessibility & Motion**:
-  - `prefers-reduced-motion` is detected automatically and can also be toggled anytime via the `CINEMATIC / STATIC` button in the header.
-  - Full keyboard navigation: `1-6` jumps between chapters, `ArrowUp`/`ArrowDown`/`PageUp`/`PageDown`/`Space` scrolls, and `Escape` closes any open drawer or modal.
-- **Graceful WebGL Fallback**:
-  - If a browser lacks WebGL support, a clean compatibility message is displayed rather than a broken or blank screen.
-
----
-
-## 🚀 How to Run Locally
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm (v9 or higher)
-
-### 1. Install Dependencies
 ```bash
+# Clone or navigate to the directory
+cd Sample
+
+# Install dependencies
 npm install
-```
 
-### 2. Start Local Development Server
-```bash
+# Start Vite dev server
 npm run dev
-```
-Open **`http://localhost:5175/`** in your browser.
+# -> Opens http://localhost:5175/
 
-### 3. Build for Production
-```bash
+# Build for production
 npm run build
 ```
-Creates an optimized production bundle in the `dist/` directory.
-
----
-
-## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).

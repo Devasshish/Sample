@@ -1,5 +1,5 @@
 import React from 'react';
-import { Volume2, VolumeX, Eye, Zap, Compass } from 'lucide-react';
+import { Volume2, VolumeX, Eye, ArrowUpRight } from 'lucide-react';
 
 export function OrientationHeader({
   currentChapter,
@@ -10,40 +10,36 @@ export function OrientationHeader({
   toggleReducedMotion,
   onOpenTransmission
 }) {
-  const percent = Math.round(progress * 100);
-
   return (
     <header className="orientation-header">
-      {/* Brand & Identity */}
+      {/* Brand & Studio Identity */}
       <div className="brand-group">
-        <div className="brand-symbol">
-          <span className="symbol-inner" />
-        </div>
+        <div className="brand-monogram">LL</div>
         <div className="brand-text">
-          <span className="brand-title">ATELIER STRATA</span>
-          <span className="brand-tag">SPATIAL POETICS & MINERAL COMPUTING</span>
+          <span className="brand-title">THE LAST LIGHT</span>
+          <span className="brand-tag">DESIGN & SPATIAL LABORATORY</span>
         </div>
       </div>
 
-      {/* Center Chapter Telemetry */}
-      <div className="chapter-telemetry">
-        <span className="telemetry-badge">{currentChapter.code}</span>
-        <span className="telemetry-title">{currentChapter.title}</span>
-        <span className="telemetry-coord">LOC // {percent.toString().padStart(2, '0')}%</span>
+      {/* Center Cinematic Timeline & Phase */}
+      <div className="chapter-timeline-badge">
+        <span className="time-code">{currentChapter.time || '03:14 AM'}</span>
+        <span className="timeline-divider">/</span>
+        <span className="timeline-chapter-name">{currentChapter.title}</span>
       </div>
 
-      {/* Right Controls */}
+      {/* Right Restrained Controls */}
       <div className="controls-group">
-        {/* Audio Toggle */}
+        {/* Audio Ambient Toggle */}
         <button
           type="button"
           className={`control-btn ${!isMuted ? 'active' : ''}`}
           onClick={toggleMute}
-          title={isMuted ? 'Enable Generative Ambient Sound' : 'Mute Sound'}
+          title={isMuted ? 'Enable Ambient Studio Tone' : 'Mute Tone'}
           aria-label={isMuted ? 'Enable Sound' : 'Mute Sound'}
         >
-          {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
-          <span className="control-label">{isMuted ? 'AUDIO OFF' : 'AUDIO LIVE'}</span>
+          {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+          <span className="control-label">{isMuted ? 'SOUND OFF' : 'SOUND ON'}</span>
         </button>
 
         {/* Motion Preference Toggle */}
@@ -51,21 +47,21 @@ export function OrientationHeader({
           type="button"
           className={`control-btn ${reducedMotion ? 'active' : ''}`}
           onClick={toggleReducedMotion}
-          title={reducedMotion ? 'Enable Full Cinematic Motion' : 'Reduce Camera Motion'}
+          title={reducedMotion ? 'Enable Full Cinematic Motion' : 'Reduce Motion'}
           aria-label="Toggle Reduced Motion"
         >
-          <Eye size={15} />
-          <span className="control-label">{reducedMotion ? 'STATIC' : 'CINEMATIC'}</span>
+          <Eye size={14} />
+          <span className="control-label">{reducedMotion ? 'STATIC' : 'CINEMA'}</span>
         </button>
 
-        {/* Transmission CTA */}
+        {/* Inquiries Action */}
         <button
           type="button"
-          className="cta-header-btn"
+          className="cta-inquiry-btn"
           onClick={onOpenTransmission}
         >
-          <Zap size={14} />
-          <span>TRANSMIT</span>
+          <span>INQUIRIES</span>
+          <ArrowUpRight size={13} />
         </button>
       </div>
     </header>
