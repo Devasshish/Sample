@@ -1,11 +1,10 @@
 import React, { Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { StudioArchitecture } from './StudioArchitecture';
-import { StudioLighting } from './StudioLighting';
-import { StudioWorkstations } from './StudioWorkstations';
-import { StudioProcessChain } from './StudioProcessChain';
-import { StudioProjectPortals } from './StudioProjectPortals';
-import { SunbeamDust } from './SunbeamDust';
+import { SpaceEnvironment } from './SpaceEnvironment';
+import { SyndicateCore } from './SyndicateCore';
+import { OperativeStations } from './OperativeStations';
+import { ArsenalPortals } from './ArsenalPortals';
+import { WarpConvergence } from './WarpConvergence';
 import { CameraRig } from './CameraRig';
 import { getAdaptiveSettings } from '../../utils/performance';
 
@@ -17,7 +16,10 @@ export function ExperienceCanvas({
   setHoveredMemberId,
   onSelectProject,
   hoveredProjectId,
-  setHoveredProjectId
+  setHoveredProjectId,
+  onCoreClick,
+  onOpenTransmission,
+  focusedTarget = null
 }) {
   const adaptive = useMemo(() => getAdaptiveSettings(), []);
 
@@ -34,7 +36,7 @@ export function ExperienceCanvas({
       }}
     >
       <Canvas
-        camera={{ position: [-2.2, 1.4, 7.8], fov: 42, near: 0.1, far: 50 }}
+        camera={{ position: [0, 1.8, 8.5], fov: 45, near: 0.1, far: 80 }}
         gl={{
           antialias: !adaptive.isMobile,
           alpha: false,
@@ -43,47 +45,69 @@ export function ExperienceCanvas({
           depth: true
         }}
         dpr={adaptive.dpr}
-        shadows
       >
-        {/* Dynamic Studio Background Color */}
-        <color attach="background" args={['#0e1017']} />
-        
-        {/* Architectural atmospheric depth haze */}
-        <fogExp2 attach="fog" args={['#0e1118', 0.024]} />
+        {/* Deep Cyber Space Background Color */}
+        <color attach="background" args={['#04050d']} />
+
+        {/* Atmospheric Volumetric Cyber Fog */}
+        <fogExp2 attach="fog" args={['#04050d', 0.026]} />
+
+        {/* Global Multi-Spectrum Lighting */}
+        <ambientLight intensity={0.8} color="#0d1527" />
+        <directionalLight
+          position={[5, 8, 5]}
+          intensity={1.8}
+          color="#00f0ff"
+        />
+        <directionalLight
+          position={[-5, 4, -5]}
+          intensity={1.5}
+          color="#ff007f"
+        />
+        <pointLight
+          position={[0, 4, 0]}
+          intensity={2.0}
+          color="#ffffff"
+          distance={16}
+        />
 
         <Suspense fallback={null}>
-          {/* Cinematic Camera Operator Rig */}
-          <CameraRig progress={progress} reducedMotion={reducedMotion} />
+          {/* Cinematic Camera Operator with Target Lock */}
+          <CameraRig
+            progress={progress}
+            reducedMotion={reducedMotion}
+            focusedTarget={focusedTarget}
+          />
 
-          {/* Dynamic Night-to-Dawn Studio Lighting */}
-          <StudioLighting progress={progress} />
+          {/* Infinite Cyber Grid, Glowing Starfield & Guide Rings */}
+          <SpaceEnvironment progress={progress} />
 
-          {/* Physical Studio Architectural Shell (Concrete, Windows, Beams) */}
-          <StudioArchitecture progress={progress} />
+          {/* Central Gravity Core (Sector 1 & 2) */}
+          <SyndicateCore
+            progress={progress}
+            onCoreClick={onCoreClick}
+          />
 
-          {/* 5 Physical Practitioner Workstations & Detailed Desks */}
-          <StudioWorkstations
+          {/* Five 3D Character Totems & Spatial HUD Badges (Sector 3) */}
+          <OperativeStations
             progress={progress}
             onSelectMember={onSelectMember}
             hoveredMemberId={hoveredMemberId}
             setHoveredMemberId={setHoveredMemberId}
           />
 
-          {/* Physical Storytelling Chain: Question -> Sketch -> Model -> Code -> Motion -> Experience */}
-          <StudioProcessChain progress={progress} />
-
-          {/* Fictional Architectural Commissions & Physical Pedestal Portals */}
-          <StudioProjectPortals
+          {/* Three Deployed Reality Commissions & Pedestals (Sector 4) */}
+          <ArsenalPortals
             progress={progress}
             onSelectProject={onSelectProject}
             hoveredProjectId={hoveredProjectId}
             setHoveredProjectId={setHoveredProjectId}
           />
 
-          {/* Natural Atmospheric Dust Motes drifting in the morning sunbeams */}
-          <SunbeamDust
-            count={reducedMotion ? 60 : (adaptive.isMobile ? 50 : 140)}
+          {/* Sector 5 Warp Convergence Gate & Transmission Terminal */}
+          <WarpConvergence
             progress={progress}
+            onOpenTransmission={onOpenTransmission}
           />
         </Suspense>
       </Canvas>

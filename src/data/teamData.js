@@ -1,87 +1,137 @@
 export const TEAM_MEMBERS = [
   {
-    id: 'elena',
-    name: 'Elena Rostova',
-    role: 'Creative Director & Architect',
-    discipline: 'Spatial Poetics & Masterplanning',
-    quote: 'Architecture begins when you subtract everything decorative and arrive at structural truth.',
-    statement: 'Trained at the ETH Zürich and Kyoto Institute, Elena directs spatial geometry, proportions, and daylight choreography. Her desk is grounded in hand drafting, trace paper, and tactile prototypes.',
-    deskArtifacts: [
-      'Raw brass drafting T-square & compass',
-      'Charcoal floorplan studies on Japanese trace paper',
-      'Leica M11 with 35mm Summilux prime lens',
-      'Slip-cast ceramic espresso vessel'
+    id: 'vex',
+    name: 'VEX CIPHER',
+    role: 'Vision Director & Spatial Reality Architect',
+    discipline: 'Spatial Geometry & Dimensional Constructs',
+    codename: 'OP-01 // CIPHER',
+    color: '#00f0ff',
+    accentGlow: 'rgba(0, 240, 255, 0.4)',
+    totemType: 'crystal',
+    position: [-4.2, 0.6, -2.8],
+    stats: {
+      spatialMastery: 98,
+      neuralSynthesis: 94,
+      dimensionalShift: 99,
+      frequencySync: 88
+    },
+    quote: 'We do not render static architecture. We manipulate gravitational vectors and light until space itself learns to speak.',
+    statement: 'Former quantum cartographer turned dimensional world-builder. Vex sculpts the overarching spatial topology and holographic lighting hierarchies for all Syndicate installations.',
+    signatureWeapon: 'Refractive Photonic Monolith & Harmonic Compass',
+    artifacts: [
+      'Zero-G Photonic Prismatic Monolith',
+      'Dual Counter-Rotating Tachyon Rings',
+      'Optic Holographic HUD Tracker',
+      'Quantum Coordinate Stasis Anchor'
     ],
-    deskPosition: [-2.1, 0.78, -0.6],
-    monographRef: 'Folio I: The Grammar of Stillness',
-    notableCommissions: ['Komorebi Pavilion', 'Mies Memorial Archive']
+    notableCommissions: ['CHROMA // CORE', 'NEURAL APEX']
   },
   {
-    id: 'marcus',
-    name: 'Marcus Vance',
-    role: 'Spatial Sculptor & 3D Lead',
-    discipline: 'Physical Prototyping & Form Studies',
-    quote: 'If a digital surface doesn\'t possess tactile inertia and grain, it will never touch the human spirit.',
-    statement: 'Marcus translates theoretical mass into physical geometry. He moves continuously between high-precision CAD simulations and workshop CNC milling, 3D resin casting, and hand polishing.',
-    deskArtifacts: [
-      'Dual color-calibrated matte studio displays',
-      'Clear cured photopolymer 3D maquettes',
-      'Mitutoyo digital vernier calipers',
-      'Custom aluminum mechanical ortholinear keyboard'
+    id: 'kai',
+    name: 'KAI MATRIX',
+    role: 'Quantum Core & Generative Systems Architect',
+    discipline: 'Algorithmic Morphogenesis & GLSL Shaders',
+    codename: 'OP-02 // MATRIX',
+    color: '#00ff88',
+    accentGlow: 'rgba(0, 255, 136, 0.4)',
+    totemType: 'hypercube',
+    position: [-2.1, 0.8, -4.2],
+    stats: {
+      spatialMastery: 91,
+      neuralSynthesis: 99,
+      dimensionalShift: 95,
+      frequencySync: 90
+    },
+    quote: 'Code is not logic; it is living computational matter waiting for sufficient velocity to take physical form.',
+    statement: 'Pioneered self-assembling mathematical hypercubes and real-time GPU particle fluid fields. Kai transforms raw mathematical equations into reactive, kinetic spatial architectures.',
+    signatureWeapon: 'Deconstructed Expanding Tesseract Matrix',
+    artifacts: [
+      'Unfolding 27-Segment Quantum Hypercube',
+      'Real-Time GLSL Neural Flow Lines',
+      'Orbital Telemetry Data Satellites',
+      'Tritium Cyber-Mesh Circuit Spine'
     ],
-    deskPosition: [-1.0, 0.78, -0.8],
-    monographRef: 'Folio II: Tectonic Resistance',
-    notableCommissions: ['Aetheria Chronometer', 'Cantilever House 04']
+    notableCommissions: ['VOID // RUNNER', 'CHROMA // CORE']
   },
   {
-    id: 'sora',
-    name: 'Sora Takahashi',
-    role: 'Creative Technologist & Systems Lead',
-    discipline: 'Generative Computation & GLSL Shaders',
-    quote: 'Algorithms shouldn\'t behave like machines; they should grow like lichen across weathered stone.',
-    statement: 'Sora bridges hardware micro-controllers, custom GLSL lighting shaders, and generative mathematical systems that give our architectural installations dynamic living behavior.',
-    deskArtifacts: [
-      'Ultrawide curved anti-glare display running shaders',
-      'Braided silicone cabling & sensor breadboards',
-      'Grid-ruled notebook of mathematical equations',
-      'Anodized black aluminum field laptop'
+    id: 'nova',
+    name: 'NOVA MIRAGE',
+    role: 'Visual Alchemist & Fluid Motion Deity',
+    discipline: 'Organic Liquid Metal & Chromatic Dispersion',
+    codename: 'OP-03 // MIRAGE',
+    color: '#ff007f',
+    accentGlow: 'rgba(255, 0, 127, 0.4)',
+    totemType: 'liquid',
+    position: [0.0, 0.6, -3.2],
+    stats: {
+      spatialMastery: 95,
+      neuralSynthesis: 92,
+      dimensionalShift: 97,
+      frequencySync: 96
+    },
+    quote: 'The universe is liquid. Rigid lines are merely illusions invented by observers who lack patience.',
+    statement: 'Nova choreographs the hypnotic fluid dynamics, iridescent liquid chrome surfaces, and organic deformation shaders that give the Syndicate its distinct, surreal aesthetic signature.',
+    signatureWeapon: 'Undulating Zero-G Liquid Mercury Core',
+    artifacts: [
+      'Self-Morphing Ferrofluid Singularity',
+      'Chromatic Dispersion Bubble Cluster',
+      'Levitating Ultraviolet Plasma Ribbon',
+      'Subsurface Light Scattering Mantle'
     ],
-    deskPosition: [0.1, 0.78, -0.7],
-    monographRef: 'Folio III: Algorithmic Topography',
-    notableCommissions: ['Kinetic Facade V', 'Neural Horizon OS']
+    notableCommissions: ['AETHER // SPHERE', 'CHROMA // CORE']
   },
   {
-    id: 'maya',
-    name: 'Maya Lindqvist',
-    role: 'Cinematographer & Motion Director',
-    discipline: 'Temporal Pacing & Lens Optics',
-    quote: 'Light is the ultimate narrator. The way a shadow crawls across raw concrete tells more than pages of prose.',
-    statement: 'Maya controls the camera perspective, optics, and pacing of our spatial narratives. With a background in Scandinavian documentary cinema, she insists on natural light and human scale.',
-    deskArtifacts: [
-      'High-CRI reference grading monitor',
-      'Sekonic L-858D digital incident light meter',
-      'Cooke Panchro 50mm cinema prime lens',
-      'Pinned 35mm film contact strips and storyboards'
+    id: 'echo',
+    name: 'ECHO RESONANCE',
+    role: 'Sonic Architect & Frequency Shaman',
+    discipline: 'Spatial Acoustics & Neuro-Haptic Waves',
+    codename: 'OP-04 // RESONANCE',
+    color: '#ffaa00',
+    accentGlow: 'rgba(255, 170, 0, 0.4)',
+    totemType: 'sonic',
+    position: [2.1, 0.8, -4.2],
+    stats: {
+      spatialMastery: 89,
+      neuralSynthesis: 96,
+      dimensionalShift: 93,
+      frequencySync: 100
+    },
+    quote: 'Light travels fast, but sound rewires the soul. If you cannot feel the sub-bass resonance in your bones, you have not arrived.',
+    statement: 'Master of spatialized acoustic fields and procedural sound synthesis. Echo generates the deep-space drones, harmonic laser chimes, and tactile audio pulses driving our reality engines.',
+    signatureWeapon: 'Kinetic Harmonic Equalizer Rings & Sub-Bass Resonator',
+    artifacts: [
+      'Quad-Oscillating Sonic Equalizer Discs',
+      'Levitating Holographic Frequency Disc',
+      'Shockwave Acoustic Emitter Rings',
+      'Binaural Spectral Analyzer Field'
     ],
-    deskPosition: [1.2, 0.78, -0.6],
-    monographRef: 'Folio IV: The Speed of Shadows',
-    notableCommissions: ['Nordic Solstice Film', 'The Ephemeral Vault']
+    notableCommissions: ['AETHER // SPHERE', 'VOID // RUNNER']
   },
   {
-    id: 'julian',
-    name: 'Julian Thorne',
-    role: 'Material Researcher & Strategist',
-    discipline: 'Tactile Mineralogy & Material Lifecycles',
-    quote: 'Every physical material holds geologic memory. We honor that memory through restraint.',
-    statement: 'Julian sources and tests our physical palette—from honed travertine and scorched cedar to acoustic wool and recycled aluminum—ensuring every built space ages with grace.',
-    deskArtifacts: [
-      'Tray of honed Carrara marble & travertine tiles',
-      'Oxidized patinated brass sample ingots',
-      'Heavy Belgian linen swatches',
-      'Open design monographs on Scandinavian Brutalism'
+    id: 'axel',
+    name: 'AXEL WARP',
+    role: 'Reality Distortion & Game Physics Hacker',
+    discipline: 'Zero-G Dynamics & Stargate Portals',
+    codename: 'OP-05 // WARP',
+    color: '#7000ff',
+    accentGlow: 'rgba(112, 0, 255, 0.4)',
+    totemType: 'stargate',
+    position: [4.2, 0.6, -2.8],
+    stats: {
+      spatialMastery: 97,
+      neuralSynthesis: 95,
+      dimensionalShift: 100,
+      frequencySync: 91
+    },
+    quote: 'There are no boundaries—only coordinates that haven\'t been unlocked yet.',
+    statement: 'Axel develops high-performance real-time physics engines, warp gate mechanics, and dimensional portal transitions that bridge virtual simulations directly into our physical realm.',
+    signatureWeapon: 'Rotating Stargate Singularity & Anti-Gravity Shards',
+    artifacts: [
+      'Dual-Axis Planetary Stargate Halo',
+      'Floating Anti-Gravity Crystalline Shards',
+      'Warp Vector Particle Accelerator',
+      'Quantum Event Horizon Shroud'
     ],
-    deskPosition: [2.3, 0.78, -0.8],
-    monographRef: 'Folio V: Mineral & Grain',
-    notableCommissions: ['Cenote Sanctuary', 'Atelier Stone Library']
+    notableCommissions: ['VOID // RUNNER', 'NEURAL APEX']
   }
 ];

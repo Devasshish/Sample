@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, ArrowRight } from 'lucide-react';
+import { X, Send, CheckCircle2, Radio, Zap } from 'lucide-react';
 
 export function TransmissionConsole({ isOpen, onClose, playChime }) {
   const [inquiryType, setInquiryType] = useState('commission');
@@ -25,13 +25,13 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
     if (!senderName || !dispatchMessage) return;
 
     setSubmitting(true);
-    if (playChime) playChime(440, 0.8);
+    if (playChime) playChime(440, 0.5);
 
     setTimeout(() => {
       setSubmitting(false);
       setIsSent(true);
-      if (playChime) playChime(523.25, 1.2);
-    }, 1000);
+      if (playChime) playChime(659.25, 1.0);
+    }, 900);
   };
 
   const handleReset = () => {
@@ -53,7 +53,8 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
       >
         <div className="transmission-header">
           <div className="transmission-status-tag">
-            <span>THE LAST LIGHT / STUDIO INQUIRIES</span>
+            <Radio size={14} className="console-radio-icon" />
+            <span>KINESIS // QUANTUM TRANSMISSION CONSOLE</span>
           </div>
           <button
             type="button"
@@ -67,38 +68,38 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
 
         {isSent ? (
           <div className="transmission-success">
-            <CheckCircle2 size={40} className="success-icon" />
-            <h3 className="success-title">INQUIRY RECEIVED</h3>
+            <CheckCircle2 size={44} className="success-icon" />
+            <h3 className="success-title">TRANSMISSION CONFIRMED</h3>
             <p className="success-text">
-              Thank you for reaching out. A partner from The Last Light will review your brief and reply directly to <strong>{senderContact || 'your email'}</strong> within two studio days.
+              Signal locked onto the Syndicate neural array. An operative will decode your coordinates and establish a direct link with <strong>{senderContact || 'your channel'}</strong>.
             </p>
             <button
               type="button"
               className="success-btn"
               onClick={handleReset}
             >
-              SEND ANOTHER INQUIRY
+              TRANSMIT ANOTHER PACKET
             </button>
           </div>
         ) : (
           <form className="transmission-form" onSubmit={handleSubmit}>
             <div className="form-intro">
-              <h2 id="inquiry-title" className="console-title">START A CONVERSATION</h2>
+              <h2 id="inquiry-title" className="console-title">ESTABLISH QUANTUM LINK</h2>
               <p className="console-desc">
-                We design architecture, public instruments, and spatial environments for institutions and private commissioners worldwide.
+                Commission the Syndicate for interactive WebGL universes, generative physics engines, and spatial dimensional installations.
               </p>
             </div>
 
             {/* Inquiry Category Selectors */}
             <div className="channel-select-group">
-              <label className="field-label">NATURE OF INQUIRY</label>
+              <label className="field-label">MISSION OBJECTIVE</label>
               <div className="channel-chips">
                 <button
                   type="button"
                   className={`channel-chip ${inquiryType === 'commission' ? 'active' : ''}`}
                   onClick={() => setInquiryType('commission')}
                 >
-                  ARCHITECTURAL COMMISSION
+                  3D WEB EXPERIENCE
                 </button>
                 <button
                   type="button"
@@ -112,7 +113,7 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
                   className={`channel-chip ${inquiryType === 'curatorial' ? 'active' : ''}`}
                   onClick={() => setInquiryType('curatorial')}
                 >
-                  CURATORIAL / EXHIBITION
+                  GAME / SHADER ENGINE
                 </button>
               </div>
             </div>
@@ -120,12 +121,12 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
             {/* Form Fields */}
             <div className="input-grid">
               <div className="field-box">
-                <label htmlFor="sender-name" className="field-label">NAME / ORGANIZATION *</label>
+                <label htmlFor="sender-name" className="field-label">OPERATIVE CALLSIGN / NAME *</label>
                 <input
                   id="sender-name"
                   type="text"
                   required
-                  placeholder="e.g. Elena Rostova / Studio Nord"
+                  placeholder="e.g. Commander Nova"
                   value={senderName}
                   onChange={(e) => setSenderName(e.target.value)}
                   className="console-input"
@@ -133,12 +134,12 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
               </div>
 
               <div className="field-box">
-                <label htmlFor="sender-contact" className="field-label">EMAIL ADDRESS *</label>
+                <label htmlFor="sender-contact" className="field-label">NEURAL FREQUENCY / EMAIL *</label>
                 <input
                   id="sender-contact"
                   type="email"
                   required
-                  placeholder="name@organization.com"
+                  placeholder="channel@domain.io"
                   value={senderContact}
                   onChange={(e) => setSenderContact(e.target.value)}
                   className="console-input"
@@ -147,11 +148,11 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
             </div>
 
             <div className="field-box">
-              <label htmlFor="project-location" className="field-label">SITE LOCATION / TIMELINE (OPTIONAL)</label>
+              <label htmlFor="project-location" className="field-label">TERRESTRIAL COORDINATES / TIMELINE</label>
               <input
                 id="project-location"
                 type="text"
-                placeholder="e.g. Kyoto, Japan / Spring 2027"
+                placeholder="e.g. Tokyo / Shibuya / Q3 2026"
                 value={projectLocation}
                 onChange={(e) => setProjectLocation(e.target.value)}
                 className="console-input"
@@ -159,12 +160,12 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
             </div>
 
             <div className="field-box">
-              <label htmlFor="dispatch-msg" className="field-label">PROJECT BRIEF OR INQUIRY *</label>
+              <label htmlFor="dispatch-msg" className="field-label">PROJECT BRIEF & SPECS *</label>
               <textarea
                 id="dispatch-msg"
                 required
                 rows={4}
-                placeholder="Outline the site, programmatic requirements, or conceptual goals..."
+                placeholder="Describe the dimensional universe, interaction scope, or audio-visual goals..."
                 value={dispatchMessage}
                 onChange={(e) => setDispatchMessage(e.target.value)}
                 className="console-textarea"
@@ -172,13 +173,13 @@ export function TransmissionConsole({ isOpen, onClose, playChime }) {
             </div>
 
             <div className="form-footer">
-              <span className="studio-location-tag">STUDIO: ZÜRICH / KYOTO / OSLO</span>
+              <span className="studio-location-tag">NODE ARRAY: ZERO-G SYNDICATE</span>
               <button
                 type="submit"
                 className="transmit-submit-btn"
                 disabled={submitting}
               >
-                <span>{submitting ? 'SENDING...' : 'SEND INQUIRY'}</span>
+                <span>{submitting ? 'TRANSMITTING...' : 'DISPATCH SIGNAL'}</span>
                 <Send size={13} />
               </button>
             </div>

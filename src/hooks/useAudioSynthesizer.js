@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 export function useAudioSynthesizer() {
   const [isMuted, setIsMuted] = useState(true);
@@ -15,25 +15,26 @@ export function useAudioSynthesizer() {
       audioCtxRef.current = ctx;
 
       const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(0.001, ctx.currentTime);
+      masterGain.gain.setValueAtTime(0.0001, ctx.currentTime);
       masterGain.connect(ctx.destination);
       masterGainRef.current = masterGain;
 
-      // Warm, organic late-night studio drone (Eb major / C minor warm harmonics: 65.4Hz, 98Hz, 130.8Hz, 196Hz, 261.6Hz)
-      const freqs = [65.41, 98.0, 130.81, 196.0, 261.63];
-      const nodes = freqs.map((freq, i) => {
+      // Deep, futuristic cyber-atmospheric drone (C minor / Blade Runner style warm detuned synth frequencies)
+      const droneFreqs = [55.0, 82.41, 110.0, 164.81, 220.0];
+      const nodes = droneFreqs.map((freq, i) => {
         const osc = ctx.createOscillator();
         const filter = ctx.createBiquadFilter();
         const gain = ctx.createGain();
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        osc.type = i % 2 === 0 ? 'sawtooth' : 'sine';
+        osc.frequency.setValueAtTime(freq + (i * 0.4), ctx.currentTime);
 
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(240 + i * 40, ctx.currentTime);
-        filter.Q.setValueAtTime(1.2, ctx.currentTime);
+        filter.frequency.setValueAtTime(180 + i * 50, ctx.currentTime);
+        filter.Q.setValueAtTime(2.5, ctx.currentTime);
 
-        const individualVolume = 0.04 / (i + 1);
+        // Low volume for comfortable ambient drone
+        const individualVolume = 0.035 / (i + 1);
         gain.gain.setValueAtTime(individualVolume, ctx.currentTime);
 
         osc.connect(filter);
@@ -57,19 +58,19 @@ export function useAudioSynthesizer() {
         audioCtxRef.current.resume();
       }
       if (masterGainRef.current && audioCtxRef.current) {
-        masterGainRef.current.gain.linearRampToValueAtTime(0.22, audioCtxRef.current.currentTime + 1.2);
+        masterGainRef.current.gain.linearRampToValueAtTime(0.24, audioCtxRef.current.currentTime + 1.0);
       }
       setIsMuted(false);
     } else {
       if (masterGainRef.current && audioCtxRef.current) {
-        masterGainRef.current.gain.linearRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.6);
+        masterGainRef.current.gain.linearRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.5);
       }
       setIsMuted(true);
     }
   }, [isMuted, initAudio]);
 
-  // Soft tactile studio acoustic chime / warm bell
-  const playChime = useCallback((freq = 440, duration = 1.0) => {
+  // Futuristic holographic laser chime / UI feedback
+  const playChime = useCallback((freq = 523.25, duration = 0.8) => {
     if (isMuted || !audioCtxRef.current) return;
     try {
       const ctx = audioCtxRef.current;
@@ -79,12 +80,14 @@ export function useAudioSynthesizer() {
 
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.5, ctx.currentTime + 0.1);
+      osc.frequency.exponentialRampToValueAtTime(freq, ctx.currentTime + duration);
 
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(freq * 1.8, ctx.currentTime);
-      filter.Q.setValueAtTime(1.5, ctx.currentTime);
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(freq * 2, ctx.currentTime);
+      filter.Q.setValueAtTime(3.0, ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
 
       osc.connect(filter);
@@ -98,7 +101,7 @@ export function useAudioSynthesizer() {
     }
   }, [isMuted]);
 
-  // Soft tactile lamp switch / room tone shift on chapter changes
+  // Sci-Fi Warp sweep on sector shift
   const playTransitionSound = useCallback(() => {
     if (isMuted || !audioCtxRef.current) return;
     try {
@@ -108,21 +111,22 @@ export function useAudioSynthesizer() {
       const filter = ctx.createBiquadFilter();
 
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(110, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(82.4, ctx.currentTime + 0.6);
+      osc.frequency.setValueAtTime(130, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(380, ctx.currentTime + 0.35);
+      osc.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.7);
 
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(260, ctx.currentTime);
+      filter.frequency.setValueAtTime(500, ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.7);
 
       osc.connect(filter);
       filter.connect(gain);
       gain.connect(masterGainRef.current || ctx.destination);
 
       osc.start();
-      osc.stop(ctx.currentTime + 0.6);
+      osc.stop(ctx.currentTime + 0.7);
     } catch (e) {
       // safe fallback
     }

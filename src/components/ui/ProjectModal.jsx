@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Check, MapPin, Calendar, Layers } from 'lucide-react';
+import { X, MapPin, Calendar, Terminal, ShieldCheck } from 'lucide-react';
 
 export function ProjectModal({ project, onClose }) {
   useEffect(() => {
@@ -16,6 +16,7 @@ export function ProjectModal({ project, onClose }) {
     <div className="modal-backdrop" onClick={onClose}>
       <div
         className="project-modal"
+        style={{ '--proj-accent': project.color || '#00f0ff' }}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -24,7 +25,9 @@ export function ProjectModal({ project, onClose }) {
         {/* Modal Header */}
         <div className="modal-header">
           <div className="modal-meta-row">
-            <span className="modal-code-badge">{project.code}</span>
+            <span className="modal-code-badge" style={{ borderColor: project.color, color: project.color }}>
+              {project.code}
+            </span>
             <span className="modal-category">{project.category}</span>
           </div>
           <button
@@ -40,7 +43,7 @@ export function ProjectModal({ project, onClose }) {
         {/* Modal Hero */}
         <div className="modal-hero">
           <h2 id="project-title" className="modal-title">{project.title}</h2>
-          <div className="modal-subtitle">{project.subtitle}</div>
+          <div className="modal-subtitle" style={{ color: project.color }}>{project.subtitle}</div>
           <div className="modal-location-row">
             <div className="loc-item">
               <MapPin size={13} />
@@ -56,8 +59,8 @@ export function ProjectModal({ project, onClose }) {
         {/* Modal Content */}
         <div className="modal-body">
           {/* Material Palette Callout */}
-          <div className="material-palette-box">
-            <div className="palette-label">PHYSICAL MATERIAL SPECIFICATION</div>
+          <div className="material-palette-box" style={{ borderColor: `${project.color}55` }}>
+            <div className="palette-label" style={{ color: project.color }}>PHOTONIC & MATERIAL MATRIX</div>
             <div className="palette-val">{project.materialPalette}</div>
           </div>
 
@@ -65,11 +68,14 @@ export function ProjectModal({ project, onClose }) {
 
           {/* Details / Architectural Innovations */}
           <div className="modal-section">
-            <h3 className="modal-section-title">STRUCTURAL & SPATIAL EXECUTION</h3>
+            <h3 className="modal-section-title">
+              <Terminal size={14} className="section-icon" />
+              <span>DIMENSIONAL ARCHITECTURE & EXECUTION</span>
+            </h3>
             <div className="highlights-grid">
               {project.details.map((detail, i) => (
                 <div key={i} className="highlight-item">
-                  <span className="highlight-bullet">―</span>
+                  <span className="highlight-bullet" style={{ color: project.color }}>◆</span>
                   <span>{detail}</span>
                 </div>
               ))}
@@ -78,12 +84,15 @@ export function ProjectModal({ project, onClose }) {
 
           {/* Technical Specifications */}
           <div className="modal-section">
-            <h3 className="modal-section-title">ARCHITECTURAL SPECIFICATIONS</h3>
+            <h3 className="modal-section-title">
+              <ShieldCheck size={14} className="section-icon" />
+              <span>SYSTEM SPECIFICATIONS</span>
+            </h3>
             <div className="specs-table">
               {Object.entries(project.specifications).map(([key, val]) => (
                 <div key={key} className="spec-row">
                   <span className="spec-key">{key.replace(/([A-Z])/g, ' $1').toUpperCase()}:</span>
-                  <span className="spec-val">{val}</span>
+                  <span className="spec-val" style={{ color: project.color }}>{val}</span>
                 </div>
               ))}
             </div>

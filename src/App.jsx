@@ -20,12 +20,14 @@ export default function App() {
   const [hoveredProjectId, setHoveredProjectId] = useState(null);
   const [isTransmissionOpen, setIsTransmissionOpen] = useState(false);
   const [webGLSupported, setWebGLSupported] = useState(true);
+  const [focusedTarget, setFocusedTarget] = useState(null);
 
   const {
     progress,
     currentChapterIndex,
     currentChapter,
-    scrollToChapter
+    scrollToChapter,
+    setProgressDirect
   } = useScrollProgress();
 
   const {
@@ -51,7 +53,7 @@ export default function App() {
     }
   }, []);
 
-  // Trigger subtle sound on chapter transition
+  // Trigger sound on sector transitions
   const prevChapterRef = useRef(currentChapterIndex);
   useEffect(() => {
     if (prevChapterRef.current !== currentChapterIndex) {
@@ -62,20 +64,36 @@ export default function App() {
 
   const handleSelectMember = (member) => {
     setSelectedMember(member);
+    setSelectedProject(null);
+    if (member && member.position) {
+      setFocusedTarget(member.position);
+    }
     playChime(587.33, 0.9);
+  };
+
+  const handleCloseMember = () => {
+    setSelectedMember(null);
+    setFocusedTarget(null);
   };
 
   const handleSelectProject = (project) => {
     setSelectedProject(project);
+    setSelectedMember(null);
+    if (project && project.cameraInspectPos) {
+      setFocusedTarget(project.cameraInspectPos);
+    }
     playChime(659.25, 0.9);
+  };
+
+  const handleCloseProject = () => {
+    setSelectedProject(null);
+    setFocusedTarget(null);
   };
 
   const handleSelectProjectById = (projId) => {
     const proj = PROJECTS.find(p => p.id === projId);
     if (proj) {
-      setSelectedProject(proj);
-      setSelectedMember(null);
-      playChime(659.25, 0.9);
+      handleSelectProject(proj);
     }
   };
 
@@ -89,7 +107,7 @@ export default function App() {
       {/* Loading sequence */}
       {!isLoaded && <LoadingScreen onLoaded={() => setIsLoaded(true)} />}
 
-      {/* 3D Canvas or WebGL fallback */}
+      {/* 3D Canvas */}
       {webGLSupported ? (
         <ExperienceCanvas
           progress={progress}
@@ -101,11 +119,13 @@ export default function App() {
           hoveredProjectId={hoveredProjectId}
           setHoveredProjectId={setHoveredProjectId}
           onCoreClick={() => playChime(440, 1.2)}
+          onOpenTransmission={handleOpenTransmission}
+          focusedTarget={focusedTarget}
         />
       ) : (
-        <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#ff6b35' }}>
+        <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#00f0ff' }}>
           <h2>WebGL Accelerated View Unavailable</h2>
-          <p style={{ color: '#aaa', marginTop: '10px' }}>Standard spatial layout loaded in compatibility mode.</p>
+          <p style={{ color: '#aaa', marginTop: '10px' }}>Please enable WebGL in your browser for the full 3D experience.</p>
         </div>
       )}
 
@@ -121,6 +141,8 @@ export default function App() {
         reducedMotion={reducedMotion}
         toggleReducedMotion={toggleReducedMotion}
         onOpenTransmission={handleOpenTransmission}
+        onSelectMember={handleSelectMember}
+        selectedMember={selectedMember}
       />
 
       {/* Story Overlay & Scroll Narrative */}
@@ -138,24 +160,25 @@ export default function App() {
         setHoveredProjectId={setHoveredProjectId}
       />
 
-      {/* Persistent Navigation Track & Progress Bar */}
+      {/* Persistent Navigation Track & Progress Scrubber */}
       <NavigationOverlay
         currentChapterIndex={currentChapterIndex}
         progress={progress}
         onNavigateChapter={scrollToChapter}
+        onScrub={setProgressDirect}
       />
 
-      {/* Slide-in Team Member Dossier Drawer */}
+      {/* Slide-in Operative Dossier Drawer */}
       <TeamDrawer
         member={selectedMember}
-        onClose={() => setSelectedMember(null)}
+        onClose={handleCloseMember}
         onSelectProjectById={handleSelectProjectById}
       />
 
       {/* Project Case Study Modal */}
       <ProjectModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={handleCloseProject}
       />
 
       {/* Final Transmission Console Modal */}
